@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- ============================================================
+       موقع «شباب إدارية أبوراي» — الصفحة الرئيسية
+       ملف واحد مكتفٍ ذاتياً (HTML + CSS + JS) جاهز للنشر على GitHub Pages.
+       ▸ ابحث عن النصوص بين [أقواس مربعة] واستبدلها قبل النشر:
+         - [رابط مجموعة فيسبوك]
+         - [نبذة إضافية عن الإدارية]
+         - أوصاف الأنشطة وصور المعرض
+       ▸ رقم الواتساب 249912469556 — يُراجَع قبل النشر.
+       ▸ إحداثيات الخريطة (12.3078، 27.8996) مأخوذة من رابط خرائط جوجل الذي شاركته المجموعة
+         (مركز صحي أبوراي) — عرض بالأقمار الاصطناعية. عدّلها إذا أردت نقطة أخرى.
+  ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5D4037">
+
+  <!-- وسوم SEO -->
+  <title>شباب إدارية أبوراي | 33 قرية بين النهود وغبيش — غرب كردفان</title>
+  <meta name="description" content="الموقع الرسمي لمجموعة شباب إدارية أبوراي على فيسبوك: 33 قرية في ولاية غرب كردفان بالسودان، نحو 70 كم غرب النهود و65 كم شرق غبيش. اهتمامات اجتماعية وثقافية ورياضية.">
+
+  <!-- وسوم Open Graph للمشاركة على وسائل التواصل -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_SD">
+  <meta property="og:title" content="شباب إدارية أبوراي | بوابة قرى الإدارية">
+  <meta property="og:description" content="مجموعة تجمع شباب وأهالي 33 قرية في غرب كردفان اجتماعياً وثقافياً ورياضياً. انضم إلينا!">
+  <meta property="og:image" content="images/og-cover.jpg"> <!-- ضع صورة غلاف بمقاس 1200×630 في مجلد images -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- الخطوط (الاستثناء الوحيد المسموح به عن قاعدة صفر مكتبات خارجية) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ المتغيرات والأساسيات ============ */
+    :root{
+      --green:#2E7D32;        /* أخضر زراعي */
+      --green-dark:#1B5E20;
+      --gold:#D4A24C;         /* ذهبي رملي */
+      --gold-soft:#EAD9B8;
+      --brown:#5D4037;        /* بني ترابي */
+      --brown-dark:#3E2723;
+      --cream:#FAF6EE;        /* خلفية كريمية */
+      --ink:#40302A;          /* لون النص الأساسي */
+      --muted:#77665A;        /* نص ثانوي */
+      --card:#FFFFFF;
+      --radius:14px;
+      --shadow:0 6px 18px rgba(62,39,35,.10);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *{transition:none!important;animation:none!important}
+    }
+    body{
+      font-family:'Tajawal','Cairo',system-ui,-apple-system,'Segoe UI',sans-serif;
+      background:var(--cream);
+      color:var(--ink);
+      line-height:1.75;
+      font-size:1.05rem;
+    }
+    h1,h2,h3{font-family:'Cairo','Tajawal',sans-serif;color:var(--brown-dark);line-height:1.4}
+    img{max-width:100%;display:block}
+    a{color:var(--green)}
+    [hidden]{display:none!important}
+    .container{width:min(1080px,92%);margin-inline:auto}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+    /* رابط تخطّي المحتوى (إتاحة الوصول) */
+    .skip{position:fixed;top:-70px;inset-inline-start:10px;background:var(--brown);color:#fff;padding:.6rem 1.1rem;border-radius:10px;z-index:200;transition:top .2s;text-decoration:none;font-weight:700}
+    .skip:focus{top:10px}
+
+    /* ============ الأزرار ============ */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+      min-height:52px;padding:.8rem 1.5rem;border-radius:14px;
+      font-family:'Cairo','Tajawal',sans-serif;font-weight:700;font-size:1.05rem;
+      text-decoration:none;border:2px solid transparent;cursor:pointer;
+      transition:background .2s,color .2s,transform .15s;
+    }
+    .btn:active{transform:scale(.97)}
+    .btn svg{width:22px;height:22px;flex-shrink:0}
+    .btn-gold{background:var(--gold);border-color:var(--gold);color:var(--brown-dark)}
+    .btn-gold:hover{background:#C4913A;border-color:#C4913A}
+    .btn-green{background:var(--green);border-color:var(--green);color:#fff}
+    .btn-green:hover{background:var(--green-dark);border-color:var(--green-dark)}
+    .btn-ghost{background:transparent;border-color:#FAF6EE;color:#FAF6EE}
+    .btn-ghost:hover{background:rgba(250,246,238,.15)}
+    .btn-wa{background:#25D366;border-color:#25D366;color:#123F1E}
+    .btn-wa:hover{background:#1EBE5D;border-color:#1EBE5D}
+    .btn-cream{background:var(--cream);border-color:var(--cream);color:var(--brown-dark)}
+    .btn-cream:hover{background:#EFE4CC;border-color:#EFE4CC}
+
+    /* ============ الهيدر الثابت ============ */
+    .site-header{
+      position:sticky;top:0;z-index:100;
+      background:var(--brown);color:var(--cream);
+      box-shadow:0 3px 12px rgba(0,0,0,.22);
+    }
+    .header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .8rem;padding:.5rem 0}
+    .brand{display:flex;align-items:center;gap:.6rem;color:var(--cream);text-decoration:none}
+    .brand svg{width:44px;height:44px;flex-shrink:0}
+    .brand-name{font-family:'Cairo',sans-serif;font-weight:800;font-size:1rem;line-height:1.25}
+    .brand-sub{display:block;font-size:.7rem;color:var(--gold);font-weight:500}
+    .header-actions{display:flex;align-items:center;gap:.5rem;margin-inline-start:auto}
+    .btn-join{min-height:44px;padding:.4rem .95rem;font-size:.9rem;border-radius:11px}
+    .nav-toggle{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:46px;height:46px;font-size:1.45rem;line-height:1;
+      background:transparent;border:2px solid var(--gold);border-radius:11px;
+      color:var(--cream);cursor:pointer;
+    }
+    .nav-toggle:focus-visible,.btn:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid rgba(212,162,76,.9);outline-offset:2px}
+    .main-nav{width:100%;display:none}
+    .main-nav.open{display:block;padding-bottom:.6rem}
+    .main-nav ul{list-style:none;display:flex;flex-direction:column;gap:.15rem}
+    .main-nav a{
+      display:block;padding:.7rem .8rem;color:var(--cream);text-decoration:none;
+      border-radius:10px;font-weight:500;
+    }
+    .main-nav a:hover{background:rgba(255,255,255,.13)}
+    @media (min-width:920px){
+      .nav-toggle{display:none}
+      .main-nav{display:block;width:auto;margin-inline-start:auto;order:2}
+      .header-actions{order:3}
+      .main-nav ul{flex-direction:row;gap:.1rem}
+      .main-nav a{padding:.4rem .75rem;font-size:.95rem}
+    }
+
+    /* ============ القسم الترحيبي Hero ============ */
+    .hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(155deg,var(--green-dark) 0%,var(--green) 70%,#3E8E42 100%);
+      color:var(--cream);
+      padding:3.8rem 0 5.2rem;
+      text-align:center;
+    }
+    .hero-badge{
+      display:inline-block;background:rgba(250,246,238,.14);
+      border:1px solid rgba(250,246,238,.35);
+      padding:.3rem 1rem;border-radius:999px;font-size:.85rem;font-weight:500;margin-bottom:1.1rem;
+    }
+    .hero h1{color:#fff;font-size:clamp(1.9rem,6vw,3.1rem);font-weight:900;margin-bottom:.8rem}
+    .hero h1 span{color:var(--gold)}
+    .hero-lead{max-width:640px;margin:0 auto 1.8rem;font-size:clamp(1.05rem,2.6vw,1.3rem);color:#F2EBDD}
+    .hero-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem}
+    .hero-dunes{position:absolute;inset-inline:0;bottom:-1px;width:100%;height:110px;pointer-events:none}
+
+    /* ============ شريط الأرقام ============ */
+    .stats{background:var(--gold);border-top:4px solid var(--brown)}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}
+    .stat{padding:1.1rem .4rem}
+    .stat + .stat{border-inline-start:1px solid rgba(93,64,55,.28)}
+    .stat-num{display:block;font-family:'Cairo',sans-serif;font-weight:900;font-size:clamp(1.35rem,4.5vw,2rem);color:var(--brown-dark);line-height:1.2}
+    .stat-label{font-size:clamp(.72rem,2.2vw,.95rem);color:#4A3020;font-weight:700}
+
+    /* ============ الأقسام العامة ============ */
+    .section{padding:3.4rem 0;scroll-margin-top:86px}
+    .section-white{background:var(--card)}
+    .section-title{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800}
+    .title-bar{display:block;width:64px;height:5px;border-radius:99px;background:var(--gold);margin:.55rem 0 1.1rem}
+    .lead{color:var(--muted);margin-bottom:1rem}
+    .narrow{max-width:760px}
+
+    /* ============ عن الإدارية ============ */
+    .about-points{list-style:none;margin:1rem 0 1.4rem;display:grid;gap:.55rem}
+    .about-points li{
+      background:var(--card);border-inline-start:4px solid var(--green);
+      border-radius:10px;padding:.7rem 1rem;box-shadow:0 2px 8px rgba(62,39,35,.07);
+    }
+    .about-points li:nth-child(2){border-inline-start-color:var(--gold)}
+    .about-points li:nth-child(3){border-inline-start-color:var(--brown)}
+    .placeholder-box{
+      border:2px dashed var(--gold);border-radius:var(--radius);
+      background:#FFFDF7;color:var(--muted);padding:1rem 1.2rem;font-size:.95rem;
+    }
+
+    /* ============ القرى: البحث والشبكة ============ */
+    .search-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;margin:1.3rem 0}
+    .search-wrap input{
+      flex:1;min-width:230px;min-height:52px;
+      padding:.7rem 1.1rem;font-family:inherit;font-size:1.05rem;color:var(--ink);
+      background:#fff;border:2px solid var(--gold-soft);border-radius:14px;
+    }
+    .search-wrap input:focus{border-color:var(--green)}
+    .v-count{font-size:.9rem;font-weight:700;color:var(--muted);white-space:nowrap}
+    .village-grid{
+      list-style:none;
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.65rem;
+    }
+    @media (min-width:720px){.village-grid{grid-template-columns:repeat(auto-fill,minmax(185px,1fr))}}
+    .village-card{
+      display:flex;align-items:center;gap:.55rem;
+      background:#fff;border:1px solid #EADFCC;border-inline-start:4px solid var(--green);
+      border-radius:12px;padding:.65rem .8rem;
+      box-shadow:0 2px 6px rgba(62,39,35,.06);
+      transition:border-color .2s;
+    }
+    .village-card:hover{border-inline-start-color:var(--gold)}
+    .v-num{
+      flex-shrink:0;min-width:30px;height:30px;border-radius:50%;
+      background:var(--gold);color:var(--brown-dark);
+      display:inline-flex;align-items:center;justify-content:center;
+      font-family:'Cairo',sans-serif;font-weight:800;font-size:.82rem;
+    }
+    .v-name{font-weight:700;color:var(--brown-dark);font-size:.98rem}
+    .no-results{
+      margin-top:1rem;padding:1.1rem;border-radius:var(--radius);
+      background:#FFF6E6;border:2px dashed var(--gold);color:var(--brown);font-weight:700;text-align:center;
+    }
+
+    /* ============ الأنشطة ============ */
+    .activity-grid{display:grid;gap:1.1rem;margin-top:.4rem}
+    @media (min-width:760px){.activity-grid{grid-template-columns:repeat(3,1fr)}}
+    .activity-card{
+      background:var(--card);border-radius:var(--radius);padding:1.6rem 1.3rem;
+      box-shadow:var(--shadow);border-top:5px solid var(--green);
+    }
+    .activity-card.is-culture{border-top-color:var(--gold)}
+    .activity-card.is-sport{border-top-color:var(--brown)}
+    .activity-icon{
+      width:58px;height:58px;border-radius:15px;margin-bottom:.9rem;
+      display:flex;align-items:center;justify-content:center;background:var(--cream);
+    }
+    .activity-card h3{font-size:1.2rem;margin-bottom:.4rem}
+    .activity-card p{color:var(--muted);font-size:.95rem}
+    .activity-card .placeholder-box{margin-top:.9rem;font-size:.85rem;padding:.6rem .8rem}
+
+    /* ============ المعرض ============ */
+    .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;margin-top:.4rem}
+    @media (min-width:760px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+    .gallery-item{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .gallery-ph{
+      aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#F3EAD8,var(--gold-soft));color:var(--brown);
+    }
+    .gallery-item figcaption{padding:.55rem .85rem;font-size:.84rem;color:var(--muted)}
+
+    /* ============ الخريطة ============ */
+    .map-frame{
+      width:100%;aspect-ratio:16/10;min-height:300px;border:0;border-radius:var(--radius);
+      box-shadow:var(--shadow);background:#EFE9DC;
+    }
+    .map-note{font-size:.88rem;color:var(--muted);margin-top:.7rem}
+
+    /* ============ التواصل ============ */
+    .contact{background:var(--brown);color:var(--cream);text-align:center}
+    .contact .section-title{color:#fff}
+    .contact p{max-width:620px;margin-inline:auto}
+    .contact-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem;margin-top:1.6rem}
+    .contact-note{margin-top:1.4rem;font-size:.92rem;color:#E8DCCB}
+
+    /* ============ التذييل ============ */
+    .site-footer{background:var(--brown-dark);color:#E8DCCB;padding:1.6rem 0;text-align:center;font-size:.9rem}
+    .footer-brand{font-family:'Cairo',sans-serif;font-weight:800;color:#fff;margin-bottom:.4rem}
+    .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.2rem 1.1rem;margin:.5rem 0}
+    .footer-nav a{color:#E8DCCB;text-decoration:none}
+    .footer-nav a:hover{color:var(--gold)}
+
+    /* ============ زر واتساب العائم ============ */
+    .wa-float{
+      position:fixed;bottom:18px;inset-inline-start:18px;z-index:150;
+      width:60px;height:60px;border-radius:50%;
+      background:#25D366;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 22px rgba(0,0,0,.30);
+      transition:transform .2s;
+    }
+    .wa-float:hover{transform:scale(1.07)}
+    .wa-float svg{width:34px;height:34px;fill:#fff}
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#home">تخطَّ إلى المحتوى</a>
+
+  <!-- ============ 1) الشريط العلوي الثابت ============ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="شباب إدارية أبوراي — الرئيسية">
+        <!-- الشعار: رسم مؤقت — استبدله بصورة الشعار -->
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="#D4A24C"/>
+          <path d="M32 48V29" stroke="#5D4037" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M32 31C21 31 14 25 11 17c10 2.2 15-2 21-6 6 4 11 8.2 21 6-3 8-10 14-21 14Z" fill="#2E7D32"/>
+          <path d="M15 51h34" stroke="#5D4037" stroke-width="4.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">شباب إدارية أبوراي
+          <span class="brand-sub">غرب كردفان — السودان</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <a class="btn btn-green btn-join" href="[رابط مجموعة فيسبوك]" target="_blank" rel="noopener">انضم إلى المجموعة</a>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="فتح القائمة">☰</button>
+      </div>
+
+      <nav class="main-nav" id="mainNav" aria-label="التنقل الرئيسي">
+        <ul>
+          <li><a href="#home">الرئيسية</a></li>
+          <li><a href="#about">عن الإدارية</a></li>
+          <li><a href="#villages">القرى</a></li>
+          <li><a href="#activities">الأنشطة</a></li>
+          <li><a href="#gallery">المعرض</a></li>
+          <li><a href="#contact">تواصل</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+
+    <!-- ============ 2) القسم الترحيبي ============ -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">ولاية غرب كردفان &bull; السودان</p>
+        <h1>شباب إدارية <span>أبوراي</span></h1>
+        <p class="hero-lead">
+          مجموعة تجمع شباب وأهالي <strong>33 قرية</strong> على هدفٍ واحد:
+          خدمة إنسان أبوراي اجتماعياً وثقافياً ورياضياً — هنا وفي بلاد المهجر.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn btn-gold" href="[رابط مجموعة فيسبوك]" target="_blank" rel="noopener">
+            انضم للمجموعة
+          </a>
+          <a class="btn btn-ghost" href="https://wa.me/249912469556" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            تواصل عبر واتساب
+          </a>
+        </div>
+      </div>
+      <svg class="hero-dunes" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 120C240 40 480 180 720 110 960 40 1200 150 1440 90v90H0Z" fill="#FAF6EE" opacity=".10"/>
+        <path d="M0 150c260-60 520 40 780-20 260-50 460 40 660 0v50H0Z" fill="#D4A24C" opacity=".35"/>
+      </svg>
+    </section>
+
+    <!-- ============ 3) شريط الأرقام ============ -->
+    <section class="stats" aria-label="أرقام عن الإدارية">
+      <div class="container stats-grid">
+        <div class="stat"><span class="stat-num">33</span><span class="stat-label">قرية في الإدارية</span></div>
+        <div class="stat"><span class="stat-num">70 كم</span><span class="stat-label">غرب مدينة النهود</span></div>
+        <div class="stat"><span class="stat-num">65 كم</span><span class="stat-label">شرق مدينة غبيش</span></div>
+      </div>
+    </section>
+
+    <!-- ============ 4) عن الإدارية ============ -->
+    <section class="section" id="about">
+      <div class="container narrow">
+        <h2 class="section-title">عن الإدارية</h2>
+        <span class="title-bar"></span>
+        <p>
+          إدارية أبوراي إداريةٌ تابعة لمحلية غبيش في ولاية غرب كردفان بالسودان، تضم <strong>33 قرية</strong>،
+          وتقع على بعد نحو <strong>70 كم غرب مدينة النهود</strong> ونحو <strong>65 كم شرق مدينة غبيش</strong>.
+        </p>
+        <p>تجمع مجموعة «شباب إدارية أبوراي» شباب القرى والأهالي والمغتربين حول ثلاثة اهتمامات رئيسية:</p>
+        <ul class="about-points">
+          <li><strong>اجتماعياً:</strong> تقوية الروابط والتكافل بين قرى الإدارية وأهاليها.</li>
+          <li><strong>ثقافياً:</strong> إحياء التراث ودعم المناشط الثقافية والمعرفية.</li>
+          <li><strong>رياضياً:</strong> جمع شباب القرى عبر المناشط والفعاليات الرياضية.</li>
+        </ul>
+        <div class="placeholder-box">
+          [تُضاف هنا نبذة أوسع عن الإدارية: تاريخها وسكانها وأهم معالمها — استبدل هذا النص عند الجاهزية.]
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5) القرى الـ33 مع البحث الفوري ============ -->
+    <section class="section section-white" id="villages">
+      <div class="container">
+        <h2 class="section-title">قرى إدارية أبوراي</h2>
+        <span class="title-bar"></span>
+        <p class="lead">اكتب اسم القرية أو جزءاً منه وسيظهر لك فوراً.</p>
+
+        <div class="search-wrap">
+          <label class="sr-only" for="villageSearch">ابحث عن قرية</label>
+          <input type="search" id="villageSearch" placeholder="ابحث عن قرية… مثال: بليلة" autocomplete="off">
+          <span class="v-count" id="villageCount">33 قرية</span>
+        </div>
+
+        <ul class="village-grid" id="villageGrid">
+          <li class="village-card" data-name="بليله"><span class="v-num">1</span><span class="v-name">بليلة</span></li>
+          <li class="village-card" data-name="مربعات"><span class="v-num">2</span><span class="v-name">مربعات</span></li>
+          <li class="village-card" data-name="صبي"><span class="v-num">3</span><span class="v-name">صبي</span></li>
+          <li class="village-card" data-name="الجقومي"><span class="v-num">4</span><span class="v-name">الجقومي</span></li>
+          <li class="village-card" data-name="ام حريره"><span class="v-num">5</span><span class="v-name">أم حريرة</span></li>
+          <li class="village-card" data-name="ود جوادت"><span class="v-num">6</span><span class="v-name">ود جوادت</span></li>
+          <li class="village-card" data-name="البور"><span class="v-num">7</span><span class="v-name">البور</span></li>
+          <li class="village-card" data-name="عيال نعيم"><span class="v-num">8</span><span class="v-name">عيال نعيم</span></li>
+          <li class="village-card" data-name="كرجه"><span class="v-num">9</span><span class="v-name">كرجة</span></li>
+          <li class="village-card" data-name="فلندو"><span class="v-num">10</span><span class="v-name">فلندو</span></li>
+          <li class="village-card" data-name="عطرون"><span class="v-num">11</span><span class="v-name">عطرون</span></li>
+          <li class="village-card" data-name="سرنمبي"><span class="v-num">12</span><span class="v-name">سرنمبي</span></li>
+          <li class="village-card" data-name="البرديه"><span class="v-num">13</span><span class="v-name">البردية</span></li>
+          <li class="village-card" data-name="ابوقيد"><span class="v-num">14</span><span class="v-name">أبوقيد</span></li>
+          <li class="village-card" data-name="ود فضل"><span class="v-num">15</span><span class="v-name">ود فضل</span></li>
+          <li class="village-card" data-name="قصاري"><span class="v-num">16</span><span class="v-name">قصاري</span></li>
+          <li class="village-card" data-name="الحمرايه"><span class="v-num">17</span><span class="v-name">الحمراية</span></li>
+          <li class="village-card" data-name="ودليونه"><span class="v-num">18</span><span class="v-name">ودليونة</span></li>
+          <li class="village-card" data-name="اخيضر"><span class="v-num">19</span><span class="v-name">أخيضر</span></li>
+          <li class="village-card" data-name="ابومليسي"><span class="v-num">20</span><span class="v-name">أبومليسي</span></li>
+          <li class="village-card" data-name="جباره"><span class="v-num">21</span><span class="v-name">جبارة</span></li>
+          <li class="village-card" data-name="جرابه"><span class="v-num">22</span><span class="v-name">جرابة</span></li>
+          <li class="village-card" data-name="الحمير"><span class="v-num">23</span><span class="v-name">الحمير</span></li>
+          <li class="village-card" data-name="ابوتامه"><span class="v-num">24</span><span class="v-name">أبوتامة</span></li>
+          <li class="village-card" data-name="ام بجكه"><span class="v-num">25</span><span class="v-name">أم بجكة</span></li>
+          <li class="village-card" data-name="الحلفايه"><span class="v-num">26</span><span class="v-name">الحلفاية</span></li>
+          <li class="village-card" data-name="خشوم"><span class="v-num">27</span><span class="v-name">خشوم</span></li>
+          <li class="village-card" data-name="ابومسيقه"><span class="v-num">28</span><span class="v-name">أبومسيقة</span></li>
+          <li class="village-card" data-name="جماع"><span class="v-num">29</span><span class="v-name">جماع</span></li>
+          <li class="village-card" data-name="ام رميله"><span class="v-num">30</span><span class="v-name">أم رميلة</span></li>
+          <li class="village-card" data-name="كوكده"><span class="v-num">31</span><span class="v-name">كوكدة</span></li>
+          <li class="village-card" data-name="ابوالكليك"><span class="v-num">32</span><span class="v-name">أبوالكليك</span></li>
+          <li class="village-card" data-name="حله فضل"><span class="v-num">33</span><span class="v-name">حلة فضل</span></li>
+        </ul>
+
+        <p class="no-results" id="noResults" hidden>لا توجد قرية بهذا الاسم — جرّب اسماً آخر أو جزءاً منه.</p>
+      </div>
+    </section>
+
+    <!-- ============ 6) الأنشطة ============ -->
+    <section class="section" id="activities">
+      <div class="container">
+        <h2 class="section-title">أنشطتنا</h2>
+        <span class="title-bar"></span>
+        <p class="lead">تتحرك المجموعة في ثلاثة مسارات تخدم إنسان أبوراي.</p>
+        <div class="activity-grid">
+
+          <article class="activity-card">
+            <div class="activity-icon">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#2E7D32" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                <circle cx="9" cy="8" r="3"/>
+                <path d="M3.5 19c.5-3.2 2.6-5 5.5-5s5 1.8 5.5 5"/>
+                <circle cx="17" cy="9" r="2.4"/>
+                <path d="M14.8 14.4c2.8.2 4.6 1.8 5.2 4.6"/>
+              </svg>
+            </div>
+            <h3>اجتماعية</h3>
+            <p>مبادرات التواصل والتكافل التي تقوّي الروابط بين أهالي قرى الإدارية.</p>
+            <div class="placeholder-box">[تفاصيل أو صور النشاط الاجتماعي تُضاف هنا]</div>
+          </article>
+
+          <article class="activity-card is-culture">
+            <div class="activity-icon">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#B07D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 6c-1.8-1.6-4.4-2-7-2v13c2.6 0 5.2.4 7 2 1.8-1.6 4.4-2 7-2V4c-2.6 0-5.2.4-7 2Z"/>
+                <path d="M12 6v13"/>
+              </svg>
+            </div>
+            <h3>ثقافية</h3>
+            <p>مناشط تعنى بتراث أبوراي وثقافتها ونشر المعرفة بين شبابها.</p>
+            <div class="placeholder-box">[تفاصيل أو صور النشاط الثقافي تُضاف هنا]</div>
+          </article>
+
+          <article class="activity-card is-sport">
+            <div class="activity-icon">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#5D4037" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M8 4h8v5a4 4 0 0 1-8 0Z"/>
+                <path d="M8 5H5a3 3 0 0 0 3 4.5M16 5h3a3 3 0 0 1-3 4.5"/>
+                <path d="M12 13v3M8.5 20h7M10 16.5h4"/>
+              </svg>
+            </div>
+            <h3>رياضية</h3>
+            <p>دوريات ومناشط رياضية تجمع شباب القرى وتطلق طاقاتهم.</p>
+            <div class="placeholder-box">[تفاصيل أو صور النشاط الرياضي تُضاف هنا]</div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7) المعرض ============ -->
+    <section class="section section-white" id="gallery">
+      <div class="container">
+        <h2 class="section-title">المعرض</h2>
+        <span class="title-bar"></span>
+        <p class="lead">صور من حياة الإدارية ومناشطها — المواضع أدناه مؤقتة.</p>
+        <!-- عند إضافة صور حقيقية استبدل كل عنصر بـ:
+             <img src="images/اسم-الصورة.jpg" alt="وصف الصورة" loading="lazy"> -->
+        <div class="gallery-grid">
+          <figure class="gallery-item">
+            <span class="gallery-ph"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3"/></svg></span>
+            <figcaption>[صورة 1 — أضف وصفاً قصيراً هنا]</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <span class="gallery-ph"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3"/></svg></span>
+            <figcaption>[صورة 2 — أضف وصفاً قصيراً هنا]</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <span class="gallery-ph"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3"/></svg></span>
+            <figcaption>[صورة 3 — أضف وصفاً قصيراً هنا]</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <span class="gallery-ph"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3"/></svg></span>
+            <figcaption>[صورة 4 — أضف وصفاً قصيراً هنا]</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <span class="gallery-ph"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3"/></svg></span>
+            <figcaption>[صورة 5 — أضف وصفاً قصيراً هنا]</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <span class="gallery-ph"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3"/></svg></span>
+            <figcaption>[صورة 6 — أضف وصفاً قصيراً هنا]</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8) الموقع الجغرافي ============ -->
+    <section class="section" id="location">
+      <div class="container">
+        <h2 class="section-title">الموقع الجغرافي</h2>
+        <span class="title-bar"></span>
+        <p class="lead">تقع الإدارية تقريباً بين مدينتي النهود وغبيش في ولاية غرب كردفان.</p>
+        <iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="موقع أبوراي — عرض الأقمار الاصطناعية"
+          src="https://www.google.com/maps/embed?pb=!1m4!2m1!1s12.3078,27.8996!5e1!6i14"></iframe>
+        <p class="map-note">
+          النقطة كما شاركها أعضاء المجموعة (مركز صحي أبوراي) — عرض بالأقمار الاصطناعية.
+          <a href="https://maps.app.goo.gl/JJbq8PUm1AYqKfkm8?g_st=ac" target="_blank" rel="noopener">فتح في خرائط جوجل</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 9) تواصل معنا ============ -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <h2 class="section-title">تواصل معنا</h2>
+        <p>انضم إلى مجموعتنا على فيسبوك لتكون في قلب الحدث، أو راسلنا مباشرة عبر واتساب.</p>
+        <div class="contact-buttons">
+          <a class="btn btn-wa" href="https://wa.me/249912469556" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            راسلنا على واتساب
+          </a>
+          <a class="btn btn-cream" href="[رابط مجموعة فيسبوك]" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073Z"/></svg>
+            مجموعة فيسبوك
+          </a>
+        </div>
+        <p class="contact-note">واتساب: <span dir="ltr">+249 912 469 556</span></p>
+        <!-- مراجعة داخلية: تأكد من صحة رقم الواتساب قبل النشر -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ 10) التذييل ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-brand">شباب إدارية أبوراي — غرب كردفان، السودان</p>
+      <nav class="footer-nav" aria-label="روابط التذييل">
+        <a href="#home">الرئيسية</a>
+        <a href="#about">عن الإدارية</a>
+        <a href="#villages">القرى</a>
+        <a href="#activities">الأنشطة</a>
+        <a href="#gallery">المعرض</a>
+        <a href="#contact">تواصل</a>
+      </nav>
+      <p>© 2026 مجموعة شباب إدارية أبوراي</p>
+    </div>
+  </footer>
+
+  <!-- زر واتساب العائم في كل الصفحة -->
+  <a class="wa-float" href="https://wa.me/249912469556" target="_blank" rel="noopener" aria-label="تواصل معنا عبر واتساب">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    (function () {
+      /* ---------- قائمة الجوال ---------- */
+      var navBtn = document.getElementById('navToggle');
+      var nav = document.getElementById('mainNav');
+      function closeNav() {
+        nav.classList.remove('open');
+        navBtn.setAttribute('aria-expanded', 'false');
+        navBtn.setAttribute('aria-label', 'فتح القائمة');
+        navBtn.textContent = '☰';
+      }
+      navBtn.addEventListener('click', function () {
+        var open = nav.classList.toggle('open');
+        navBtn.setAttribute('aria-expanded', String(open));
+        navBtn.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة');
+        navBtn.textContent = open ? '✕' : '☰';
+      });
+      /* إغلاق القائمة عند اختيار رابط */
+      nav.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') closeNav();
+      });
+
+      /* ---------- البحث الفوري في القرى ---------- */
+      var input = document.getElementById('villageSearch');
+      var countEl = document.getElementById('villageCount');
+      var noRes = document.getElementById('noResults');
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.village-card'));
+      var total = cards.length;
+
+      function normalize(s) {
+        return s
+          .replace(/[أإآ]/g, 'ا')
+          .replace(/ة/g, 'ه')
+          .replace(/[\u064B-\u0652]/g, '') /* إزالة التشكيل */
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      if (input) {
+        input.addEventListener('input', function () {
+          var q = normalize(input.value);
+          var shown = 0;
+          for (var i = 0; i < cards.length; i++) {
+            var hit = !q || cards[i].getAttribute('data-name').indexOf(q) !== -1;
+            cards[i].hidden = !hit;
+            if (hit) shown++;
+          }
+          noRes.hidden = shown > 0;
+          countEl.textContent = q
+            ? shown + ' من ' + total + ' قرية'
+            : total + ' قرية';
+        });
+      }
+    })();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a445619b1a59995b',t:'MTc5MDk2MTY2Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
