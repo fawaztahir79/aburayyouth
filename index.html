@@ -65,6 +65,9 @@ nav a:hover{background:var(--surface);color:var(--ink)}
 .route .dot{fill:var(--brown)}
 .route .home{fill:var(--green);stroke:var(--gold);stroke-width:4}
 .note{font-size:.9rem;color:var(--muted);margin-top:8px}
+.map-card{background:var(--surface);border-radius:14px;padding:22px;border-bottom:5px solid var(--gold)}
+.map-card p{color:var(--muted);margin-bottom:16px}
+.map-card .cta{margin:0}
 
 /* villages */
 .search{width:100%;max-width:420px;min-height:48px;padding:8px 16px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;margin:6px 0 16px}
@@ -115,7 +118,7 @@ footer{padding:28px 0 90px;border-top:2px solid var(--gold);color:var(--muted);f
     <a class="btn fill" href="https://www.facebook.com/share/g/1E6NHGtmCt/" target="_blank" rel="noopener">انضم إلى المجموعة</a>
   </div>
   <nav aria-label="التنقل الرئيسي">
-    <a href="#top">الرئيسية</a><a href="#about">عن الإدارية</a><a href="#villages">القرى</a><a href="#activities">الأنشطة</a><a href="#gallery">المعرض</a><a href="#contact">تواصل</a>
+    <a href="#top">الرئيسية</a><a href="#about">عن الإدارية</a><a href="#location">الموقع</a><a href="#villages">القرى</a><a href="#activities">الأنشطة</a><a href="#gallery">المعرض</a><a href="#contact">تواصل</a>
   </nav>
 </header>
 
@@ -156,6 +159,17 @@ footer{padding:28px 0 90px;border-top:2px solid var(--gold);color:var(--muted);f
     <p>إدارية أبوراي في ولاية غرب كردفان، وتتكون من ثلاث وثلاثين قرية. تبعد نحو 70 كم غرب مدينة النهود، ونحو 65 كم شرق مدينة غبيش.</p>
     <p>مجموعة «شباب إدارية أبوراي» تجمع أبناء الإدارية حول اهتمامات اجتماعية وثقافية ورياضية.</p>
     <p>[أضف هنا نبذة أطول عن تاريخ الإدارية وأهلها]</p>
+  </section>
+
+  <section id="location">
+    <h2>موقع أبوراي</h2>
+    <div class="map-card">
+      <p>يمكنك الوصول إلى موقع أبوراي عبر Google Maps، أو فتحه مباشرة بوضع عرض الأقمار الصناعية.</p>
+      <div class="cta">
+        <a class="btn fill" href="https://maps.app.goo.gl/JJbq8PUm1AYqKfkm8?g_st=ac" target="_blank" rel="noopener">فتح الموقع على الخريطة</a>
+        <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=8V5X%2B4RH%20Abu-Ray%20Cilinc%20Center%2C%20Sudan&amp;basemap=satellite" target="_blank" rel="noopener">عرض بالأقمار الصناعية</a>
+      </div>
+    </div>
   </section>
 
   <section id="villages">
