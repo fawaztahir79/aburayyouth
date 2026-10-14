@@ -1,0 +1,1 @@
+{"name":"aburay","version":"1.0.0","private":true,"scripts":{"start":"node server.js","build":"mkdir -p dist && cp index.html styles.css app.js manus-routes.json brand-logo.jpg brand-banner.jpg gallery-*.jpg dist/"},"engines":{"node":">=20"}}
