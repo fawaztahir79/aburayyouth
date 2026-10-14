@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ساهم في حصر وتوثيق بيانات قرى إدارية أبوراي وخدماتها." />
+  <meta property="og:title" content="استمارة توثيق قرى أبوراي" />
+  <meta property="og:description" content="ساهم في حفظ ذاكرة القرى ومعلوماتها للأجيال القادمة." />
+  <title>استمارة توثيق قرى أبوراي | شباب إدارية أبوراي</title>
+  <link rel="icon" type="image/jpeg" href="brand-logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell" id="top">
+    <header class="site-header">
+      <div class="brand-bar">
+        <a class="brand" href="index.html" aria-label="العودة إلى الموقع الرئيسي"><img src="brand-logo.jpg" alt="شعار أبوراي" /><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a>
+        <a class="header-join" href="index.html">العودة للموقع <span>↗</span></a>
+      </div>
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <a href="index.html">الرئيسية</a><a href="index.html#about">عن الإدارية</a><a href="index.html#villages">دليل القرى</a><a class="active" href="form.html">استمارة التوثيق</a><a href="index.html#contact">تواصل</a>
+      </nav>
+    </header>
+    <main>
+      <section class="form-hero">
+        <p class="section-kicker">ذاكرة أبوراي · مشاركة مجتمعية</p>
+        <h1>ساهم في توثيق <span>قريتك.</span></h1>
+        <p>تساعدنا هذه الاستمارة في جمع معلومات القرى وأوضاعها السكانية والخدمات المتوفرة، لحفظها وتطوير الدليل. أجب عن المعلومات التي تعرفها فقط، واترك ما لا تعرفه فارغاً.</p>
+        <div class="form-notice"><strong>قبل البدء:</strong> لا تكتب تقديرات على أنها أرقام رسمية. الاسم ورقم الهاتف يُستخدمان للتوثيق الداخلي ولا يُنشران على الموقع.</div>
+      </section>
+      <section class="embedded-form-section" aria-label="استمارة حصر وتوثيق بيانات قرى إدارية أبوراي">
+        <div class="embedded-form-heading"><div><p class="section-kicker">الاستمارة الإلكترونية</p><h2>حصر وتوثيق بيانات <span>القرى.</span></h2></div><a class="text-link" href="https://docs.google.com/forms/d/e/1FAIpQLScc6wgh5er9CJ9S9nJ8ev5MWcSFb3zWXDHcLj6hicdI15OFcw/viewform" target="_blank" rel="noopener">فتح في صفحة مستقلة <span>↗</span></a></div>
+        <div class="form-frame-wrap">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScc6wgh5er9CJ9S9nJ8ev5MWcSFb3zWXDHcLj6hicdI15OFcw/viewform?embedded=true" title="استمارة حصر وتوثيق بيانات قرى إدارية أبوراي" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <p class="form-fallback">إذا لم تظهر الاستمارة داخل الموقع أو واجهت مشكلة في تعبئتها، <a href="https://docs.google.com/forms/d/e/1FAIpQLScc6wgh5er9CJ9S9nJ8ev5MWcSFb3zWXDHcLj6hicdI15OFcw/viewform" target="_blank" rel="noopener">افتحها مباشرة من هنا</a>.</p>
+      </section>
+    </main>
+    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span></footer>
+  </div>
+  <script>
+    // Keep the embedded form usable on desktop and mobile screens.
+    (function () {
+      const frame = document.querySelector('.form-frame-wrap iframe');
+      if (frame) frame.style.height = window.matchMedia('(max-width: 800px)').matches ? '1750px' : '1650px';
+    })();
+  </script>
+</body>
+</html>
