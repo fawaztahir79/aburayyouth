@@ -24,3 +24,11 @@
 .form-fallback{text-align:center;color:var(--muted);font-size:12px;line-height:2;padding:16px}
 .form-fallback a{color:var(--green);font-weight:800;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:800px){.contribute-section{grid-template-columns:1fr;gap:24px;padding:34px 22px}.contribute-note{border-right:0;border-top:1px solid var(--line);padding:22px 0 0}.form-hero{padding:48px 0 30px}.embedded-form-heading{align-items:start;flex-direction:column}.embedded-form-heading h2{font-size:25px}.form-frame-wrap iframe{height:1750px}}
+
+
+/* Site-wide beta notice: data is preliminary and not officially approved */
+.beta-notice{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;margin:18px 0 0;background:#fff1d4;border:1px solid #d9b45d;border-right:5px solid #9a6425;border-radius:7px;color:#49371f;font-size:13px;line-height:1.9}
+.beta-notice strong{color:#7a1f2b;font-weight:800;white-space:nowrap}
+.beta-notice span{flex:1;min-width:220px}
+.beta-notice a{color:#173b2a;font-weight:800;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+@media(max-width:800px){.beta-notice{gap:5px;padding:12px 14px}.beta-notice span{min-width:100%}.beta-notice a{white-space:normal}}
