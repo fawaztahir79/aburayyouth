@@ -1,80 +1,11 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="قاعدة بيانات تجريبية لقرى إدارية أبوراي؛ جميع البيانات أولية وغير معتمدة نهائياً.">
-  <title>قاعدة بيانات قرى إدارية أبوراي | نسخة تجريبية</title>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    .db-hero{padding:42px 0 24px}.db-hero h1{font:800 clamp(30px,4vw,46px)/1.4 Cairo;color:var(--green);margin:0 0 10px}.db-hero p{line-height:2;color:var(--muted);max-width:850px}.db-tools{display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap}.db-tools input{flex:1;min-width:220px;padding:13px 15px;border:1px solid var(--line);background:var(--paper);font:14px Tajawal;border-radius:5px}.table-wrap{overflow:auto;border:1px solid var(--line);background:var(--paper);border-radius:8px;box-shadow:var(--shadow)}table{border-collapse:collapse;width:100%;min-width:1500px;font-size:12px;line-height:1.9}th,td{padding:12px 13px;text-align:right;vertical-align:top;border-bottom:1px solid var(--line);border-left:1px solid #e8dfcf}th{position:sticky;top:0;background:var(--green);color:white;white-space:nowrap}tbody tr:nth-child(even){background:#f8f2e6}tbody tr:hover{background:#f1e4c7}.db-tag{display:inline-block;padding:4px 9px;border-radius:4px;background:#fff1d4;color:#7a1f2b;font-weight:800;font-size:11px}.db-note{color:var(--muted);font-size:12px;line-height:2;margin:14px 0 30px}.db-count{font-size:12px;color:var(--muted)}
-  </style>
-</head>
-<body>
-  <div class="page-shell">
-    <header class="site-header">
-      <div class="brand-bar">
-        <a class="brand" href="index.html"><img src="brand-logo.jpg" alt="شعار أبوراي"><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a>
-        <a class="header-join" href="form.html">ساهم في التوثيق ↗</a>
-      </div>
-      <nav class="main-nav"><a href="index.html">الرئيسية</a><a class="active" href="database.html">قاعدة البيانات</a><a href="form.html">استمارة التوثيق</a></nav>
-    </header>
-    <div class="beta-notice" role="status"><strong>تنبيه: نسخة تجريبية</strong><span>كل البيانات أولية، جرى دمجها وفلترتها مبدئياً فقط، ولم تُعتمد نهائياً ولا تمثل سجلاً رسمياً. درجات الموثوقية تقديرية للمراجعة وليست تصديقاً مستقلاً.</span><a href="form.html">أرسل تصحيحاً أو تحديثاً ↗</a></div>
-    <main>
-      <section class="db-hero">
-        <p class="section-kicker">قاعدة بيانات القرى</p>
-        <h1>قاعدة بيانات قرى إدارية أبوراي</h1>
-        <p>نسخة تجريبية بعد الدمج والفلترة الأولية. تم الإبقاء على نطاقات السكان المتعارضة بدلاً من اختيار رقم نهائي، وتُعرض المعلومات الناقصة أو المختلف عليها لحين مراجعتها مجتمعياً.</p>
-        <span class="db-tag">بيانات أولية — غير معتمدة نهائياً</span>
-        <p><a class="button primary" href="form.html">إضافة أو تصحيح بيانات <span>↗</span></a> <a class="button" href="index.html#villages" style="border:1px solid var(--line)">العودة إلى دليل القرى <span>↗</span></a></p>
-      </section>
-      <div class="db-tools"><input id="tableSearch" type="search" placeholder="ابحث باسم القرية أو الشيخ أو الخدمة..." aria-label="بحث في قاعدة البيانات"><span class="db-count" id="rowCount">جارٍ التحميل...</span></div>
-      <div class="table-wrap"><table><thead><tr><th>اسم القرية</th><th>شيخ القرية</th><th>عدد السكان</th><th>نوع الأرقام</th><th>المياه والدوانكي</th><th>التعليم</th><th>الصحة</th><th>الشرطة</th><th>السوق</th><th>حالة المراجعة</th><th>مستوى الموثوقية</th><th>تاريخ آخر تحديث</th><th>ملاحظات المراجعة</th></tr></thead><tbody id="databaseRows"></tbody></table></div>
-      <p class="db-note">ملاحظة: «مكتملة» تعني أن السجل جُمّع وفق المعلومات المتاحة حالياً، وليس أن المعلومات تحققت ميدانياً أو اعتُمدت نهائياً. قد تتغير البيانات عند ورود إفادات جديدة. لا تُنشر بيانات الاتصال الخاصة بمقدمي الاستمارات.</p>
-    </main>
-    <footer><span>أبوراي .. تجمعنا</span><span>قاعدة بيانات تجريبية · آخر تحرير: 16/10/2026</span></footer>
-  </div>
-  <script>
-    const norm = s => s.replace(/[\u064B-\u065F\u0670\u0640]/g, "").replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه").replace(/\s+/g, "").toLowerCase();
-    const keys = ["sheikh", "population", "numbersType", "water", "education", "health", "police", "market", "reviewStatus", "reliability", "updated", "reviewNotes"];
-    const search = document.getElementById("tableSearch");
-    const body = document.getElementById("databaseRows");
-    const count = document.getElementById("rowCount");
-
-    function filterRows() {
-      const query = norm(search.value);
-      let visible = 0;
-      body.querySelectorAll("tr").forEach(row => {
-        const matches = norm(row.innerText).includes(query);
-        row.hidden = !matches;
-        if (matches) visible++;
-      });
-      count.textContent = `${visible} سجل`;
-    }
-
-    fetch("data/villages.json")
-      .then(response => {
-        if (!response.ok) throw new Error(response.status);
-        return response.json();
-      })
-      .then(db => {
-        const items = [...db.centers, ...db.villages.filter(village => village.record)];
-        items.forEach(item => {
-          const row = document.createElement("tr");
-          [item.name, ...keys.map(key => item.record[key])].forEach(value => {
-            const cell = document.createElement("td");
-            cell.textContent = value || "";
-            row.append(cell);
-          });
-          body.append(row);
-        });
-        filterRows();
-      })
-      .catch(() => {
-        count.textContent = "تعذّر تحميل البيانات";
-      });
-
-    search.addEventListener("input", filterRows);
-  </script>
-</body>
-</html>
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="قاعدة بيانات تجريبية لقرى إدارية أبوراي؛ جميع البيانات أولية وغير معتمدة نهائياً."><title>قاعدة بيانات قرى إدارية أبوراي | نسخة تجريبية</title><link rel="stylesheet" href="styles.css"><style>
+.db-hero{padding:42px 0 24px}.db-hero h1{font:800 clamp(30px,4vw,46px)/1.4 Cairo;color:var(--green);margin:0 0 10px}.db-hero p{line-height:2;color:var(--muted);max-width:850px}.db-tools{display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap}.db-tools input{flex:1;min-width:220px;padding:13px 15px;border:1px solid var(--line);background:var(--paper);font:14px Tajawal;border-radius:5px}.table-wrap{overflow:auto;border:1px solid var(--line);background:var(--paper);border-radius:8px;box-shadow:var(--shadow)}table{border-collapse:collapse;width:100%;min-width:1500px;font-size:12px;line-height:1.9}th,td{padding:12px 13px;text-align:right;vertical-align:top;border-bottom:1px solid var(--line);border-left:1px solid #e8dfcf}th{position:sticky;top:0;background:var(--green);color:white;white-space:nowrap}tbody tr:nth-child(even){background:#f8f2e6}tbody tr:hover{background:#f1e4c7}.db-tag{display:inline-block;padding:4px 9px;border-radius:4px;background:#fff1d4;color:#7a1f2b;font-weight:800;font-size:11px}.db-note{color:var(--muted);font-size:12px;line-height:2;margin:14px 0 30px}.db-count{font-size:12px;color:var(--muted)}.field-notes-panel{margin:24px 0;padding:22px 24px;border:1px solid #d7c79f;border-right:4px solid var(--burgundy);background:#fffaf0;border-radius:8px}.field-notes-panel h2{margin:4px 0 8px;color:var(--green);font:800 22px/1.5 Cairo}.field-notes-panel p{margin:0;color:var(--muted);line-height:2}</style></head><body><div class="page-shell"><header class="site-header"><div class="brand-bar"><a class="brand" href="index.html"><img src="brand-logo.jpg" alt="شعار أبوراي"><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a><a class="header-join" href="form.html">ساهم في التوثيق ↗</a></div><nav class="main-nav"><a href="index.html">الرئيسية</a><a class="active" href="database.html">قاعدة البيانات</a><a href="form.html">استمارة التوثيق</a></nav></header><div class="beta-notice" role="status"><strong>تنبيه: نسخة تجريبية</strong><span>كل البيانات أولية، جرى دمجها وفلترتها مبدئياً فقط، ولم تُعتمد نهائياً ولا تمثل سجلاً رسمياً. درجات الموثوقية تقديرية للمراجعة وليست تصديقاً مستقلاً.</span><a href="form.html">أرسل تصحيحاً أو تحديثاً ↗</a></div><main><section class="db-hero"><p class="section-kicker">قاعدة بيانات القرى</p><h1>قاعدة بيانات قرى إدارية أبوراي</h1><p>نسخة تجريبية بعد الدمج والفلترة الأولية. تم الإبقاء على نطاقات السكان المتعارضة بدلاً من اختيار رقم نهائي، وتُعرض المعلومات الناقصة أو المختلف عليها لحين مراجعتها مجتمعياً.</p><span class="db-tag">بيانات أولية — غير معتمدة نهائياً</span><p><a class="button primary" href="form.html">إضافة أو تصحيح بيانات <span>↗</span></a> <a class="button" href="index.html#villages" style="border:1px solid var(--line)">العودة إلى دليل القرى <span>↗</span></a></p></section><section class="field-notes-panel" aria-labelledby="field-notes-title"><p class="section-kicker">سجل المراجعة المحلية</p><h2 id="field-notes-title">الملاحظات الميدانية</h2><p>يُخصص العمود الأخير للملاحظات الميدانية الموثقة مثل زيارة مرفق أو تصحيح حالة خدمة. تُترك الخانة فارغة حتى ورود تحديث قابل للمراجعة، ولا تُضاف بيانات شخصية أو أرقام هواتف.</p></section><div class="db-tools"><input id="tableSearch" type="search" placeholder="ابحث باسم القرية أو الشيخ أو الخدمة أو الملاحظة..." aria-label="بحث في قاعدة البيانات"><span class="db-count" id="rowCount">جارٍ التحميل...</span></div><div class="table-wrap"><table><thead><tr><th>اسم القرية</th><th>شيخ القرية</th><th>عدد السكان</th><th>نوع الأرقام</th><th>المياه والدوانكي</th><th>التعليم</th><th>الصحة</th><th>الشرطة</th><th>السوق</th><th>حالة المراجعة</th><th>مستوى الموثوقية</th><th>تاريخ آخر تحديث</th><th>ملاحظات المراجعة</th><th>الملاحظات الميدانية</th></tr></thead><tbody id="databaseRows"></tbody></table></div><p class="db-note">ملاحظة: «مكتملة» تعني أن السجل جُمّع وفق المعلومات المتاحة حالياً، وليس أن المعلومات تحققت ميدانياً أو اعتُمدت نهائياً. قد تتغير البيانات عند ورود إفادات جديدة. لا تُنشر أسماء أو أرقام هواتف مقدمي الاستمارات.</p></main><footer><span>أبوراي .. تجمعنا</span><span>قاعدة بيانات تجريبية · آخر تحرير: 26/10/2026</span></footer></div><script>const norm=s=>s.replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,'').toLowerCase();
+const KEYS=['sheikh','population','numbersType','water','education','health','police','market','reviewStatus','reliability','updated','reviewNotes','fieldNotes'];
+const search=document.getElementById('tableSearch'),body=document.getElementById('databaseRows'),count=document.getElementById('rowCount');
+function filterRows(){const q=norm(search.value);let n=0;body.querySelectorAll('tr').forEach(r=>{const yes=norm(r.innerText).includes(q);r.hidden=!yes;if(yes)n++});count.textContent=n+' سجل';}
+fetch('data/villages.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(db=>{
+const items=[...db.centers,...db.villages.filter(v=>v.record)];
+items.forEach(it=>{const tr=document.createElement('tr');[it.name,...KEYS.map(k=>it.record[k])].forEach((t,i)=>{const td=document.createElement('td');td.textContent=t || (KEYS[i] === 'fieldNotes' ? 'لم تُسجّل بعد' : '');tr.append(td)});body.append(tr)});
+filterRows();
+}).catch(()=>{count.textContent='تعذّر تحميل البيانات'});
+search.addEventListener('input',filterRows);</script></body></html>
