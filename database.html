@@ -5,7 +5,7 @@ const search=document.getElementById('tableSearch'),body=document.getElementById
 function filterRows(){const q=norm(search.value);let n=0;body.querySelectorAll('tr').forEach(r=>{const yes=norm(r.innerText).includes(q);r.hidden=!yes;if(yes)n++});count.textContent=n+' سجل';}
 fetch('data/villages.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(db=>{
 const items=[...db.centers,...db.villages.filter(v=>v.record)];
-items.forEach(it=>{const tr=document.createElement('tr');[it.name,...KEYS.map(k=>it.record[k])].forEach((t,i)=>{const td=document.createElement('td');td.textContent=t || (KEYS[i] === 'fieldNotes' ? 'لم تُسجّل بعد' : '');tr.append(td)});body.append(tr)});
+items.forEach(it=>{const tr=document.createElement('tr');[it.name,...KEYS.map(k=>it.record[k])].forEach((t,i)=>{const td=document.createElement('td');td.textContent=t || (KEYS[i-1] === 'fieldNotes' ? 'لم تُسجّل بعد' : '');tr.append(td)});body.append(tr)});
 filterRows();
 }).catch(()=>{count.textContent='تعذّر تحميل البيانات'});
 search.addEventListener('input',filterRows);</script></body></html>
