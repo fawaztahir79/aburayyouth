@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="التبرعات والمبادرات الخيرية لشباب إدارية أبوراي، غرب كردفان: مبادرات شخصية ومنفعة عامة." />
+  <meta property="og:title" content="التبرعات والمبادرات | شباب إدارية أبوراي" />
+  <meta property="og:description" content="أبوراي .. تجمعنا. مبادرات خيرية يقودها أبناء الإدارية." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:url" content="https://fawaztahir79.github.io/aburayyouth/donations.html" />
+  <meta property="og:image" content="https://fawaztahir79.github.io/aburayyouth/brand-banner.jpg" />
+  <link rel="canonical" href="https://fawaztahir79.github.io/aburayyouth/donations.html" />
+  <title>التبرعات والمبادرات | شباب إدارية أبوراي</title>
+  <link rel="icon" type="image/jpeg" href="brand-logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* صفحة التبرعات والمبادرات — تبني على متغيرات الهوية في styles.css */
+    .give-hero{padding:46px 0 10px}
+    .give-hero h1{font:800 clamp(38px,5vw,60px)/1.2 Cairo;color:var(--green);letter-spacing:-2px;margin:0 0 16px}
+    .give-hero h1 span{font-family:Georgia,serif;font-weight:400;color:var(--brown)}
+    .give-hero p{font-size:15px;line-height:2;color:var(--muted);max-width:640px;margin:0}
+    .give-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:34px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .give-steps article{padding:26px 24px;border-inline-start:1px solid var(--line)}
+    .give-steps article:first-child{border:0;padding-inline-start:0}
+    .give-steps span{font:500 12px 'DM Mono';color:var(--brown)}
+    .give-steps h3{font:700 18px Cairo;color:var(--green);margin:10px 0 5px}
+    .give-steps p{color:var(--muted);font-size:13px;line-height:1.9;margin:0}
+    .give-sec{padding:52px 0 0}
+    .give-sec .section-heading{margin-bottom:26px}
+    .init-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .init-card{background:var(--paper);border:1px solid var(--line);border-bottom:4px solid var(--gold);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:12px}
+    .init-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .init-card h3{font:700 22px Cairo;color:var(--green);margin:0}
+    .init-tags{display:flex;gap:7px;flex-wrap:wrap}
+    .tag{font:700 11px Tajawal;padding:5px 11px;border-radius:20px;white-space:nowrap}
+    .tag.type{background:var(--surface);color:var(--brown)}
+    .tag.live{background:#e2ebd9;color:#1f4d2b}
+    .tag.soon{background:#fff1d4;color:#7a4a10}
+    .tag.done{background:#eee;color:var(--muted)}
+    .init-card p.desc{font-size:14px;line-height:2;color:var(--ink);margin:0}
+    .init-account{background:var(--surface);border-right:4px solid var(--gold);border-radius:6px;padding:12px 15px;font-size:13px;line-height:1.9;color:var(--ink)}
+    .init-account strong{color:var(--green);display:block;margin-bottom:3px;font-size:12px}
+    .init-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+    .init-actions a{min-height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:6px;font-weight:700;font-size:13px}
+    .init-actions a.wa{background:#1fa855;color:#fff}
+    .init-actions a.group{border:1px solid var(--green);color:var(--green)}
+    .give-empty{text-align:center;padding:46px 24px;background:var(--surface);border-radius:12px;color:var(--muted);line-height:2}
+    .give-empty strong{display:block;color:var(--green);font:700 20px Cairo;margin-bottom:8px}
+    .give-empty a{color:var(--green);font-weight:700}
+    .trust{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;padding:52px 0 0}
+    .trust-note{background:var(--paper);border:1px solid var(--line);border-top:6px solid var(--gold);border-radius:12px;padding:26px}
+    .trust-note h2{font:700 24px Cairo;color:var(--green);margin:0 0 10px}
+    .trust-note p{font-size:14px;line-height:2;color:var(--ink);margin:0}
+    .trust-cta{background:var(--green);color:#faf6ee;border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+    .trust-cta h2{font:700 22px Cairo;margin:0}
+    .trust-cta p{font-size:14px;line-height:1.9;margin:0}
+    .trust-cta a{min-height:46px;display:inline-flex;align-items:center;gap:8px;padding:0 18px;border-radius:6px;font-weight:700;font-size:14px;background:var(--gold);color:#173b2a;align-self:flex-start}
+    @media(max-width:800px){
+      .give-steps{grid-template-columns:1fr}
+      .give-steps article{padding:20px 0;border:0;border-bottom:1px solid var(--line)}
+      .init-grid{grid-template-columns:1fr}
+      .trust{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell" id="top">
+    <header class="site-header">
+      <div class="brand-bar">
+        <a class="brand" href="index.html" aria-label="العودة إلى الموقع الرئيسي"><img src="brand-logo.jpg" alt="شعار أبوراي" /><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a>
+        <a class="header-join" href="https://wa.me/249912469556" target="_blank" rel="noopener">تواصل عبر واتساب <span>↗</span></a>
+      </div>
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <a href="index.html">الرئيسية</a><a href="index.html#villages">القرى</a><a href="database.html">قاعدة البيانات</a><a href="form.html">استمارة التوثيق</a><a class="active" href="donations.html">التبرعات والمبادرات</a><a href="index.html#contact">تواصل</a>
+      </nav>
+    </header>
+
+    <div class="beta-notice" role="status" aria-label="تنبيه الشفافية"><strong>شفافية</strong><span>هذه الصفحة تعرّف بمبادرات أبناء الإدارية. التنسيق والتبرع يتمّان مباشرة مع القائمين على كل مبادرة عبر واتساب، ويتحمّل كل مبادِر مسؤولية جمع أمواله وصرفها.</span></div>
+
+    <main>
+      <section class="give-hero">
+        <p class="section-kicker">ذاكرة أبوراي · عطاء مشترك</p>
+        <h1>نعطي لأهلنا، <span>ونترك أثراً.</span></h1>
+        <p>مبادرات خيرية يقودها أبناء إدارية أبوراي لخدمة القرى وأهلها. منها ما هو لمنفعة عامة تخدم الإدارية كلها، ومنها ما يسند حالة إنسانية بعينها. تختار مبادرتك، وتتواصل مع القائمين عليها مباشرة.</p>
+        <div class="give-steps">
+          <article><span>01</span><h3>اختر مبادرة</h3><p>تصفّح المبادرات المعروضة، واقرأ هدف كل واحدة ومن تخدم.</p></article>
+          <article><span>02</span><h3>تواصل مع القائمين</h3><p>عبر واتساب المبادرة أو قروبها المخصص، للاتفاق على طريقة التبرع.</p></article>
+          <article><span>03</span><h3>تبرّع مباشرة</h3><p>إلى الحساب المعلن للمبادرة. التبرع يصل لصاحب المبادرة مباشرة.</p></article>
+        </div>
+      </section>
+
+      <section class="give-sec" aria-labelledby="init-title">
+        <div class="section-heading"><div><p class="section-kicker">المبادرات</p><h2 id="init-title">مبادرات <span>قائمة.</span></h2></div></div>
+        <div class="init-grid" id="initGrid"></div>
+        <p class="give-empty" id="initEmpty" hidden>
+          <strong>لا توجد مبادرات معروضة الآن</strong>
+          تُضاف المبادرات هنا فور انطلاقها. إن كانت لديك مبادرة لخدمة الإدارية، <a href="https://wa.me/249912469556" target="_blank" rel="noopener">تواصل معنا عبر واتساب</a> لإدراجها.
+        </p>
+      </section>
+
+      <section class="trust">
+        <div class="trust-note">
+          <h2>كيف نعمل</h2>
+          <p>شباب إدارية أبوراي مساحة تعريف وربط بين المحتاج والمحسن، لا تجمع الأموال ولا تحتفظ بها. كل مبادرة يديرها أصحابها، وهم المسؤولون عن جمع تبرعاتها وصرفها وتوثيقها لأهلها. تحقّق دائماً من القائمين على أي مبادرة قبل التبرع.</p>
+        </div>
+        <div class="trust-cta">
+          <h2>عندك مبادرة؟</h2>
+          <p>اقترح مبادرة جديدة لخدمة قريتك أو الإدارية، لنعرّف بها هنا.</p>
+          <a href="https://wa.me/249912469556" target="_blank" rel="noopener">اقترح مبادرة عبر واتساب ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span></footer>
+  </div>
+  <div class="floating-wa"><a href="https://wa.me/249912469556" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">واتساب <span>↗</span></a></div>
+
+  <script>
+    /* صفحة التبرعات: تقرأ المبادرات من data/initiatives.json.
+       المصدر الوحيد للبيانات هو الملف نفسه. أضف مبادرة بتعديله فقط.
+       تنبيه: fetch لا يعمل من file:// مباشرة؛ الاختبار على GitHub Pages أو خادم محلي. */
+    const SITE_WA = "249912469556";
+    const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+    const statusTag = status => {
+      const s = String(status || "");
+      if (/جاري/.test(s)) return { cls: "live", label: "جارية" };
+      if (/قادم/.test(s)) return { cls: "soon", label: "قادمة" };
+      if (/مكتمل|منتهي/.test(s)) return { cls: "done", label: "مكتملة" };
+      return null;
+    };
+
+    const waLink = phone => "https://wa.me/" + String(phone || SITE_WA).replace(/[^0-9]/g, "");
+
+    const buildCard = item => {
+      const card = el("div", "init-card");
+
+      const top = el("div", "init-top");
+      top.append(el("h3", null, item.title || "مبادرة"));
+      const tags = el("div", "init-tags");
+      if (item.type) tags.append(el("span", "tag type", item.type));
+      const st = statusTag(item.status);
+      if (st) tags.append(el("span", "tag " + st.cls, st.label));
+      top.append(tags);
+      card.append(top);
+
+      if (item.summary) card.append(el("p", "desc", item.summary));
+
+      if (item.account) {
+        const box = el("div", "init-account");
+        box.append(el("strong", null, "طريقة التبرع"));
+        box.append(document.createTextNode(item.account));
+        card.append(box);
+      }
+
+      const actions = el("div", "init-actions");
+      const wa = el("a", "wa", "تواصل عبر واتساب ↗");
+      wa.href = waLink(item.contactPhone);
+      wa.target = "_blank"; wa.rel = "noopener";
+      actions.append(wa);
+      if (item.whatsappGroup) {
+        const g = el("a", "group", "قروب المبادرة ↗");
+        g.href = item.whatsappGroup; g.target = "_blank"; g.rel = "noopener";
+        actions.append(g);
+      }
+      card.append(actions);
+
+      return card;
+    };
+
+    fetch("data/initiatives.json", { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(db => {
+        const grid = document.getElementById("initGrid");
+        const empty = document.getElementById("initEmpty");
+        const items = (db.initiatives || []).filter(i => i && i.title);
+
+        if (!items.length) { empty.hidden = false; return; }
+        items.forEach(item => grid.append(buildCard(item)));
+      })
+      .catch(error => {
+        console.error("تعذّر تحميل المبادرات", error);
+        const empty = document.getElementById("initEmpty");
+        empty.hidden = false;
+        empty.textContent = "تعذّر تحميل المبادرات. أعد المحاولة لاحقاً.";
+      });
+  </script>
+</body>
+</html>
