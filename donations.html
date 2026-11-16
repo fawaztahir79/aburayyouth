@@ -41,7 +41,15 @@
     .tag.live{background:#e2ebd9;color:#1f4d2b}
     .tag.soon{background:#fff1d4;color:#7a4a10}
     .tag.done{background:#eee;color:var(--muted)}
-    .init-card p.desc{font-size:14px;line-height:2;color:var(--ink);margin:0}
+    .init-card p.desc{font-size:14px;line-height:2;color:var(--ink);margin:0;font-weight:700}
+    .init-details p{font-size:13.5px;line-height:2;color:var(--ink);margin:0 0 10px}
+    .init-details p:last-child{margin-bottom:0}
+    .init-committee{background:#fffdf8;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+    .init-committee strong{display:block;color:var(--green);font:700 13px Cairo;margin-bottom:8px}
+    .init-committee ul{margin:0;padding-inline-start:18px}
+    .init-committee li{font-size:13px;line-height:1.9;color:var(--ink)}
+    .init-committee .committee-note{margin:8px 0 0;font-size:12px;color:var(--muted);line-height:1.8}
+    .init-card.wide{grid-column:1 / -1}
     .init-account{background:var(--surface);border-right:4px solid var(--gold);border-radius:6px;padding:12px 15px;font-size:13px;line-height:1.9;color:var(--ink)}
     .init-account strong{color:var(--green);display:block;margin-bottom:3px;font-size:12px}
     .init-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
@@ -138,6 +146,7 @@
 
     const buildCard = item => {
       const card = el("div", "init-card");
+      if (Array.isArray(item.details) && item.details.length >= 2) card.classList.add("wide");
 
       const top = el("div", "init-top");
       top.append(el("h3", null, item.title || "مبادرة"));
@@ -149,6 +158,27 @@
       card.append(top);
 
       if (item.summary) card.append(el("p", "desc", item.summary));
+
+      /* نص النداء الكامل: مصفوفة فقرات اختيارية */
+      if (Array.isArray(item.details) && item.details.length) {
+        const body = el("div", "init-details");
+        item.details.forEach(par => body.append(el("p", null, par)));
+        card.append(body);
+      }
+
+      /* لجنة الإشراف: مصفوفة { role, name }؛ تُعرض الأسماء المتوفرة فقط */
+      if (Array.isArray(item.committee) && item.committee.length) {
+        const named = item.committee.filter(m => m && m.name);
+        if (named.length) {
+          const box = el("div", "init-committee");
+          box.append(el("strong", null, "لجنة الإشراف"));
+          const ul = el("ul");
+          named.forEach(m => ul.append(el("li", null, m.role ? `${m.name} — ${m.role}` : m.name)));
+          box.append(ul);
+          if (item.committeeNote) box.append(el("p", "committee-note", item.committeeNote));
+          card.append(box);
+        }
+      }
 
       if (item.account) {
         const box = el("div", "init-account");
