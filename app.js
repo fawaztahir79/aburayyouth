@@ -96,6 +96,12 @@ const buildVillage = village => {
     body.append(makeSection("معلومات سابقة في الدليل", makeChips(guide.services)));
   }
 
+  const pageLink = document.createElement("a");
+  pageLink.href = "village.html?v=" + encodeURIComponent(name);
+  pageLink.className = "text-link village-page-link";
+  pageLink.textContent = "فتح صفحة القرية الكاملة ←";
+  body.append(pageLink);
+
   details.append(summary, body);
 
   details.addEventListener("toggle", () => {

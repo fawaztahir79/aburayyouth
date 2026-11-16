@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="صفحة قرية من دليل قرى إدارية أبوراي، غرب كردفان؛ بيانات أولية قيد المراجعة." />
+  <meta property="og:title" content="صفحة القرية | شباب إدارية أبوراي" />
+  <meta property="og:description" content="أبوراي .. تجمعنا. بيانات القرية وخدماتها وصورها." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
+  <title>صفحة القرية | شباب إدارية أبوراي</title>
+  <link rel="icon" type="image/jpeg" href="brand-logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* صفحة القرية — تبني على متغيرات الهوية في styles.css */
+    .vp-main{padding:24px 0 70px}
+    .crumbs{font-size:12px;color:var(--muted);padding:6px 0 0;line-height:2}
+    .crumbs a{color:var(--green);font-weight:700}
+    .vp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding:20px 0 0}
+    .vp-head .section-kicker{margin:0 0 8px}
+    .vp-head h1{font:800 clamp(40px,6vw,64px)/1.15 Cairo;color:var(--green);letter-spacing:-2px;margin:0}
+    .badge{font:700 12px Tajawal;padding:6px 13px;border-radius:20px;white-space:nowrap}
+    .badge.ok{background:#e2ebd9;color:#1f4d2b}.badge.mid{background:#fff1d4;color:#7a4a10}.badge.no{background:#f6dadd;color:#7a1f2b}
+    .vp-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:22px 0 0}
+    .vp-facts div{background:var(--paper);padding:16px 20px;display:flex;flex-direction:column;gap:3px}
+    .vp-facts span{font-size:12px;color:var(--muted)}
+    .vp-facts b{font:700 17px/1.6 Cairo;color:var(--green)}
+    .vp-sec{padding:46px 0 0}
+    .vp-sec h2{font:700 28px Cairo;color:var(--green);margin:0 0 16px}
+    .vp-sec h2 span{font-family:Georgia,serif;font-weight:400;color:var(--brown)}
+    .gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:200px 200px;gap:12px}
+    .g-item,.g-ph{position:relative;border:0;padding:0;border-radius:12px;overflow:hidden;border-bottom:4px solid var(--gold)}
+    .g-item{cursor:pointer;background:var(--surface)}.g-item:first-child{grid-row:span 2}
+    .g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+    .g-item:hover img{transform:scale(1.04)}
+    .g-item figcaption,.g-ph span{position:absolute;right:0;left:0;bottom:0;padding:10px 14px;background:rgba(23,59,42,.82);color:#faf6ee;font-size:13px}
+    .g-ph{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e3d6b6,#cdb989);color:#5e5046;font-size:14px}
+    .gal-note{color:var(--muted);font-size:12px;line-height:2;margin:14px 0 0}
+    .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .svc{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px}
+    .svc .svc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .svc h3{margin:0;font:700 18px Cairo;color:var(--green)}
+    .svc p{margin:0;font-size:14px;line-height:1.9;color:var(--ink)}
+    .vp-two{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;padding:46px 0 0}
+    .vp-note{background:var(--paper);border:1px solid var(--line);border-top:6px solid var(--gold);border-radius:12px;padding:24px}
+    .vp-note h2{margin:0 0 8px;font:700 22px Cairo;color:var(--green)}
+    .vp-note p{margin:0;font-size:14px;line-height:2;color:var(--ink)}
+    .vp-cta{background:var(--green);color:#faf6ee;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+    .vp-cta h2{margin:0;font:700 22px Cairo}
+    .vp-cta p{margin:0;font-size:14px;line-height:1.9}
+    .vp-cta .row{display:flex;gap:10px;flex-wrap:wrap}
+    .vp-cta a{min-height:46px;display:inline-flex;align-items:center;padding:0 18px;border-radius:6px;font-weight:700;font-size:14px}
+    .vp-cta a.gold{background:var(--gold);color:#173b2a}.vp-cta a.line{border:1px solid #faf6ee;color:#faf6ee}
+    .vp-nav{display:flex;justify-content:space-between;gap:12px;padding:34px 0 0;font-weight:700;color:var(--green)}
+    .vp-nav a,.vp-nav span{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:12px 20px;font-size:14px}
+    .vp-nav span{color:var(--muted);opacity:.5}
+    .vp-missing{text-align:center;padding:70px 20px;color:var(--muted)}
+    .vp-missing a{color:var(--green);font-weight:700}
+    #lb{position:fixed;inset:0;z-index:50;background:rgba(15,25,18,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:60px 16px 24px}
+    #lb[hidden]{display:none}
+    #lb img{max-width:100%;max-height:78vh;border-radius:8px}
+    #lb p{color:#faf6ee;margin:0;font-size:14px}
+    #lb button{position:absolute;background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:50%;width:48px;height:48px;font-size:22px;cursor:pointer}
+    #lbClose{top:max(12px,env(safe-area-inset-top));left:12px}#lbPrev{right:12px;top:50%}#lbNext{left:12px;top:50%}
+    @media(max-width:800px){
+      .vp-facts{grid-template-columns:1fr 1fr}
+      .gal{grid-template-columns:1fr 1fr;grid-template-rows:180px;grid-auto-rows:130px}
+      .g-item:first-child{grid-column:span 2;grid-row:span 1;height:200px}
+      .svc-grid{grid-template-columns:1fr}
+      .vp-two{grid-template-columns:1fr}
+      .vp-nav{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell" id="top">
+    <header class="site-header">
+      <div class="brand-bar">
+        <a class="brand" href="index.html" aria-label="العودة إلى الموقع الرئيسي"><img src="brand-logo.jpg" alt="شعار أبوراي" /><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a>
+        <a class="header-join" href="index.html#villages">دليل القرى <span>↗</span></a>
+      </div>
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <a href="index.html">الرئيسية</a><a href="index.html#villages">القرى</a><a href="database.html">قاعدة البيانات</a><a href="form.html">استمارة التوثيق</a>
+      </nav>
+    </header>
+
+    <div class="beta-notice" role="status" aria-label="تنبيه النسخة التجريبية"><strong>تنبيه: نسخة تجريبية</strong><span>بيانات هذه القرية أولية، قيد المراجعة، ولم تُعتمد نهائياً. لا تُعد مرجعاً رسمياً.</span><a href="form.html">صحّح أو أضف معلومة ↗</a></div>
+
+    <main class="vp-main" id="vpMain">
+      <p class="vp-missing" id="vpLoading">جارٍ تحميل بيانات القرية…</p>
+    </main>
+
+    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span></footer>
+  </div>
+
+  <div id="lb" hidden role="dialog" aria-label="عرض الصورة">
+    <button type="button" id="lbClose" aria-label="إغلاق">✕</button>
+    <button type="button" id="lbPrev" aria-label="الصورة السابقة">›</button>
+    <button type="button" id="lbNext" aria-label="الصورة التالية">‹</button>
+    <img id="lbImg" alt="" />
+    <p id="lbCap"></p>
+  </div>
+
+  <script>
+    /* صفحة القرية: تقرأ ?v=اسم-القرية من data/villages.json وتعرض بياناتها.
+       المصدر الوحيد للبيانات هو الملف نفسه. تنبيه: fetch لا يعمل من file:// مباشرة. */
+    const norm = value => String(value ?? "")
+      .replace(/[ً-ٰٟـ]/g, "")
+      .replace(/[أإآ]/g, "ا")
+      .replace(/ى/g, "ي")
+      .replace(/ة/g, "ه")
+      .replace(/\s+/g, "")
+      .toLowerCase();
+
+    /* خريطة الصور لكل قرية. تُضاف قرى جديدة هنا كلما توفّرت صورها.
+       كل صورة: { src, cap }. القرى بلا صور تعرض أماكن "بانتظار الصور". */
+    const PHOTOS = {
+      "مربعات": [
+        { src: "images/marabaat-1-mosque.jpg", cap: "مسجد مربعات" },
+        { src: "images/marabaat-2-rainy-season.jpg", cap: "موسم الخريف في مربعات" }
+      ]
+    };
+    const PLACEHOLDERS = ["الدوانكي", "السوق", "المدرسة", "الطريق"];
+
+    const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+    const param = new URLSearchParams(location.search).get("v") || "";
+
+    const statusOf = text => {
+      const t = String(text || "");
+      if (!t || /^غير (معروف|مذكور)/.test(t)) return { k: "mid", l: "غير مذكور" };
+      if (/لا يوجد|غير متوفر|لا توجد|انعدام|متوقف/.test(t)) return { k: "no", l: "غير متوفر" };
+      if (/تحتاج|شحيح|جزئي|سيئ|تقدير|متقطع/.test(t)) return { k: "mid", l: "يحتاج متابعة" };
+      return { k: "ok", l: "متوفر" };
+    };
+
+    const reliabilityClass = text => {
+      const t = String(text || "");
+      if (/عالية/.test(t)) return "ok";
+      if (/ضعيفة/.test(t)) return "no";
+      return "mid";
+    };
+
+    fetch("data/villages.json", { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(db => {
+        const main = document.getElementById("vpMain");
+        main.textContent = "";
+
+        const villages = (db.villages || []).filter(v => v && v.name);
+        const centers = (db.centers || []).filter(c => c && c.name);
+        const all = [...villages, ...centers];
+        const target = norm(param);
+        const entry = target ? all.find(v => norm(v.name) === target) : null;
+
+        if (!entry) {
+          const box = el("div", "vp-missing");
+          box.append(el("p", null, param ? `لم نجد قرية باسم «${param}».` : "لم يُحدَّد اسم القرية."));
+          const back = el("a", null, "العودة إلى دليل القرى ←"); back.href = "index.html#villages";
+          box.append(back);
+          main.append(box);
+          return;
+        }
+
+        const name = entry.name;
+        const guide = entry.guide || null;
+        const record = entry.record || null;
+        document.title = `${name} | شباب إدارية أبوراي`;
+
+        /* مسار التنقل */
+        const crumbs = el("nav", "crumbs"); crumbs.setAttribute("aria-label", "مسار التنقل");
+        const c1 = el("a", null, "الرئيسية"); c1.href = "index.html";
+        const c2 = el("a", null, "القرى"); c2.href = "index.html#villages";
+        crumbs.append(c1, document.createTextNode(" › "), c2, document.createTextNode(" › "), el("b", null, name));
+        main.append(crumbs);
+
+        /* رأس القرية */
+        const head = el("div", "vp-head");
+        const left = el("div");
+        left.append(el("p", "section-kicker", "غرب كردفان · إدارية أبوراي"), el("h1", null, name));
+        head.append(left);
+        if (record?.reliability) {
+          head.append(el("span", "badge " + reliabilityClass(record.reliability), "موثوقية: " + record.reliability));
+        }
+        main.append(head);
+
+        /* شريط الحقائق */
+        const pop = (guide && (guide.population || guide.families))
+          ? [guide.population, guide.families].filter(Boolean).join(" — ")
+          : (record?.population || "غير مذكور");
+        const numType = record?.numbersType ? ` (${record.numbersType})` : "";
+        const facts = el("div", "vp-facts");
+        [
+          ["السكان" + numType, pop],
+          ["يوم السوق", (record?.market || guide?.market || "غير مذكور")],
+          ["الشيخ / المسؤول", (guide?.sheikh || record?.sheikh || "غير مذكور")],
+          ["آخر تحديث", (record?.updated || "—")]
+        ].forEach(([l, v]) => { const d = el("div"); d.append(el("span", null, l), el("b", null, v)); facts.append(d); });
+        main.append(facts);
+
+        /* معرض الصور */
+        const photos = PHOTOS[name] || [];
+        const galSec = el("section", "vp-sec");
+        const galHead = el("h2"); galHead.append(document.createTextNode("معرض "), el("span", null, "القرية."));
+        galSec.append(galHead);
+        const gal = el("div", "gal");
+        photos.forEach((p, i) => {
+          const btn = el("button", "g-item"); btn.type = "button"; btn.setAttribute("aria-label", "تكبير: " + p.cap);
+          const img = document.createElement("img"); img.src = p.src; img.alt = p.cap; img.loading = "lazy";
+          const cap = el("figcaption", null, p.cap);
+          btn.append(img, cap);
+          btn.addEventListener("click", () => openLightbox(i));
+          gal.append(btn);
+        });
+        const need = Math.max(0, 4 - photos.length);
+        for (let i = 0; i < need; i++) {
+          const ph = el("div", "g-ph", "بانتظار الصورة");
+          ph.append(el("span", null, PLACEHOLDERS[i] || "صورة"));
+          gal.append(ph);
+        }
+        galSec.append(gal);
+        const note = photos.length
+          ? `${photos.length} صور حتى الآن، وبقية الأماكن بانتظار صور أهل القرية. اضغط على أي صورة لتكبيرها.`
+          : "لا توجد صور بعد. أرسل صور قريتك عبر واتساب أو الاستمارة لتُضاف هنا بعد المراجعة.";
+        galSec.append(el("p", "gal-note", note));
+        main.append(galSec);
+
+        /* الخدمات والمرافق */
+        const svcSec = el("section", "vp-sec");
+        svcSec.append(el("h2", null, "الخدمات والمرافق"));
+        const grid = el("div", "svc-grid");
+        [
+          ["المياه والطرق", guide?.water || record?.water],
+          ["التعليم", guide?.education || record?.education],
+          ["الصحة", guide?.health || record?.health],
+          ["الشرطة والأمن", record?.police],
+          ["السوق", (record?.market || guide?.market) ? ("يوم السوق: " + (record?.market || guide?.market)) : ""],
+          ["السكان", pop]
+        ].forEach(([title, val]) => {
+          const text = val || "لم ترد معلومات كافية في الاستمارات";
+          const st = (title === "السوق") ? { k: "ok", l: "أسبوعي" }
+                   : (title === "السكان") ? { k: reliabilityClass(record?.reliability), l: record?.numbersType || "تقديري" }
+                   : statusOf(val);
+          const card = el("div", "svc");
+          const top = el("div", "svc-top");
+          top.append(el("h3", null, title), el("span", "badge " + st.k, st.l));
+          card.append(top, el("p", null, text));
+          grid.append(card);
+        });
+        svcSec.append(grid);
+        main.append(svcSec);
+
+        /* كيف نقرأ البيانات + دعوة المساهمة */
+        const two = el("div", "vp-two");
+        const noteBox = el("div", "vp-note");
+        noteBox.append(el("h2", null, "كيف نقرأ هذه البيانات"));
+        const explain = [
+          record?.reviewStatus ? ("حالة المراجعة: " + record.reviewStatus + ".") : "",
+          guide?.review || record?.reviewNotes || "",
+          "الأرقام المتعارضة محفوظة كما وردت، ولا يُعد أي رقم مرجعاً رسمياً قبل اعتماده."
+        ].filter(Boolean).join(" ");
+        noteBox.append(el("p", null, explain));
+        const cta = el("div", "vp-cta");
+        cta.append(el("h2", null, `من أهل ${name}؟`), el("p", null, "صحّح معلومة أو أضف صورة، فمعلومتك تبني ذاكرة القرية."));
+        const row = el("div", "row");
+        const a1 = el("a", "gold", "صحّح معلومة ↗"); a1.href = "form.html";
+        const a2 = el("a", "line", "أرسل صورة عبر واتساب ↗"); a2.href = "https://wa.me/249912469556"; a2.target = "_blank"; a2.rel = "noopener";
+        row.append(a1, a2); cta.append(row);
+        two.append(noteBox, cta);
+        main.append(two);
+
+        /* التنقل بين القرى (ضمن القائمة فقط، لا المراكز) */
+        const idx = villages.findIndex(v => norm(v.name) === target);
+        if (idx !== -1) {
+          const nav = el("div", "vp-nav");
+          const prev = villages[idx - 1], next = villages[idx + 1];
+          if (prev) { const a = el("a", null, "→ " + prev.name); a.href = "village.html?v=" + encodeURIComponent(prev.name); nav.append(a); }
+          else nav.append(el("span", null, "→ أول القائمة"));
+          if (next) { const a = el("a", null, next.name + " ←"); a.href = "village.html?v=" + encodeURIComponent(next.name); nav.append(a); }
+          else nav.append(el("span", null, "آخر القائمة ←"));
+          main.append(nav);
+        }
+
+        /* صندوق التكبير */
+        const lb = document.getElementById("lb");
+        const lbImg = document.getElementById("lbImg");
+        const lbCap = document.getElementById("lbCap");
+        let cur = 0;
+        function show(i) { cur = (i + photos.length) % photos.length; lbImg.src = photos[cur].src; lbImg.alt = photos[cur].cap; lbCap.textContent = photos[cur].cap; }
+        function openLightbox(i) { if (!photos.length) return; show(i); lb.hidden = false; document.body.style.overflow = "hidden"; }
+        function closeLightbox() { lb.hidden = true; document.body.style.overflow = ""; }
+        document.getElementById("lbClose").addEventListener("click", closeLightbox);
+        document.getElementById("lbPrev").addEventListener("click", () => show(cur - 1));
+        document.getElementById("lbNext").addEventListener("click", () => show(cur + 1));
+        lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
+        addEventListener("keydown", e => {
+          if (lb.hidden) return;
+          if (e.key === "Escape") closeLightbox();
+          if (e.key === "ArrowLeft") show(cur + 1);
+          if (e.key === "ArrowRight") show(cur - 1);
+        });
+      })
+      .catch(error => {
+        console.error("تعذّر تحميل بيانات القرية", error);
+        const main = document.getElementById("vpMain");
+        main.textContent = "";
+        const box = el("div", "vp-missing");
+        box.append(el("p", null, "تعذّر تحميل بيانات القرية. أعد المحاولة لاحقاً."));
+        const back = el("a", null, "العودة إلى الدليل ←"); back.href = "index.html#villages";
+        box.append(back);
+        main.append(box);
+      });
+  </script>
+</body>
+</html>

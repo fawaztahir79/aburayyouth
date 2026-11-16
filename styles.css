@@ -41,3 +41,6 @@
 .map-actions{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-top:16px;color:var(--muted);font-size:11px}
 .map-actions .button{font-size:12px}
 @media(max-width:800px){.boundary-map-section{padding-top:60px}.map-frame-wrap{padding:6px}.map-frame-wrap iframe{height:500px}.map-actions{align-items:flex-start;flex-direction:column;gap:12px}}
+
+/* رابط صفحة القرية الكاملة داخل بطاقة الدليل */
+.v-body .village-page-link{grid-column:1 / -1;margin-top:4px;padding-top:14px;border-top:1px solid rgba(58,40,34,.15);font-size:13px}
