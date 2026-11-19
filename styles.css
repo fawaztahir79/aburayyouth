@@ -61,3 +61,6 @@
 /* عدّاد الزوار في التذييل */
 .visitor-stat{display:inline-flex;align-items:center;gap:6px}
 .visitor-stat strong{color:var(--green);font:700 12px 'DM Mono',monospace;letter-spacing:.3px}
+
+/* عنوان احتياطي لصفحة القرية (يستبدله JS بالعنوان الفعلي) */
+.vp-fallback-title{font:800 clamp(32px,5vw,48px)/1.2 Cairo;color:var(--green);margin:24px 0 0;letter-spacing:-1px}
