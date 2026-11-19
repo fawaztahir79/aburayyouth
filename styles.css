@@ -57,3 +57,7 @@
 .give-banner .text-link.light{color:#faf6ee}
 .give-banner .text-link.light span{color:#efc879}
 @media(max-width:800px){.give-banner{grid-template-columns:1fr;gap:24px;padding:36px 24px;margin:60px 0}.give-banner-cta{align-items:stretch}.give-banner .button.gold{justify-content:center}}
+
+/* عدّاد الزوار في التذييل */
+.visitor-stat{display:inline-flex;align-items:center;gap:6px}
+.visitor-stat strong{color:var(--green);font:700 12px 'DM Mono',monospace;letter-spacing:.3px}

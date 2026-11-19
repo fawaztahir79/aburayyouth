@@ -97,6 +97,7 @@ tbody tr:hover{background:#f1e4c7}
   <footer>
     <span>أبوراي .. تجمعنا</span>
     <span>قاعدة بيانات تجريبية · آخر تحرير: <time id="lastEdited" datetime="2026-10-16">26/10/2026</time></span>
+    <span class="visitor-stat">عدد الزوار: <strong data-visitor-count aria-live="polite">…</strong></span>
   </footer>
 </div>
 
@@ -220,5 +221,6 @@ fetch("data/villages.json", { cache: "no-cache" })
 
 searchInput.addEventListener("input", applyFilter);
 </script>
+  <script src="visitor-counter.js" defer></script>
 </body>
 </html>

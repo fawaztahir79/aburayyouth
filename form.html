@@ -39,7 +39,7 @@
         <p class="form-fallback">إذا لم تظهر الاستمارة داخل الموقع أو واجهت مشكلة في تعبئتها، <a href="https://forms.gle/atue3mhBZFK8uHED7" target="_blank" rel="noopener">افتحها مباشرة من هنا</a>.</p>
       </section>
     </main>
-    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span></footer>
+    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span><span class="visitor-stat">عدد الزوار: <strong data-visitor-count aria-live="polite">…</strong></span></footer>
   </div>
   <script>
     // Keep the embedded form usable on desktop and mobile screens.
@@ -48,5 +48,6 @@
       if (frame) frame.style.height = window.matchMedia('(max-width: 800px)').matches ? '1750px' : '1650px';
     })();
   </script>
+  <script src="visitor-counter.js" defer></script>
 </body>
 </html>
