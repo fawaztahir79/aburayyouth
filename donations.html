@@ -56,6 +56,21 @@
     .init-qr{display:flex;flex-direction:column;align-items:center;gap:8px;background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:16px}
     .init-qr img{width:180px;height:180px;display:block;border-radius:6px}
     .init-qr span{font-size:12px;color:var(--muted);text-align:center;line-height:1.7}
+    .init-poster{display:block;width:100%;border:0;padding:0;cursor:zoom-in;border-radius:12px;overflow:hidden;border-bottom:4px solid var(--gold);background:var(--surface);box-shadow:var(--shadow)}
+    .init-poster img{width:100%;height:auto;display:block}
+    .pay-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .pay-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fffdf8;border:1px solid var(--line);border-radius:8px;padding:12px 14px;flex-wrap:wrap}
+    .pay-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+    .pay-bank{font:700 13px Cairo;color:var(--green)}
+    .pay-label{font-size:12px;color:var(--muted)}
+    .pay-num{font:700 23px/1.2 'DM Mono',monospace;color:var(--ink);letter-spacing:1px;direction:ltr;unicode-bidi:plaintext;word-break:break-all}
+    .pay-holder{font-size:12px;color:var(--muted)}
+    .pay-copy{min-height:42px;padding:0 18px;border-radius:6px;background:var(--green);color:#fff;font:700 13px Tajawal;border:0;cursor:pointer;white-space:nowrap}
+    .pay-copy:hover{background:var(--deep)}
+    #poster-lb{position:fixed;inset:0;z-index:60;background:rgba(15,25,18,.93);display:flex;align-items:center;justify-content:center;padding:40px 12px}
+    #poster-lb[hidden]{display:none}
+    #poster-lb img{max-width:100%;max-height:92vh;border-radius:8px}
+    #poster-lb button{position:absolute;top:14px;left:14px;width:46px;height:46px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:22px;cursor:pointer}
     .init-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
     .init-actions a{min-height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:6px;font-weight:700;font-size:13px}
     .init-actions a.wa{background:#1fa855;color:#fff}
@@ -131,12 +146,26 @@
   </div>
   <div class="floating-wa"><a href="https://wa.me/249912469556" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">واتساب <span>↗</span></a></div>
 
+  <div id="poster-lb" hidden role="dialog" aria-label="بوستر المبادرة">
+    <button type="button" id="poster-close" aria-label="إغلاق">✕</button>
+    <img id="poster-img" alt="بوستر مبادرة مشروع الطاقة الشمسية لدونكي أبوراي" />
+  </div>
+
   <script>
     /* صفحة التبرعات: تقرأ المبادرات من data/initiatives.json.
        المصدر الوحيد للبيانات هو الملف نفسه. أضف مبادرة بتعديله فقط.
        تنبيه: fetch لا يعمل من file:// مباشرة؛ الاختبار على GitHub Pages أو خادم محلي. */
     const SITE_WA = "249912469556";
     const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+    /* تكبير البوستر */
+    const posterLb = document.getElementById("poster-lb");
+    const posterImg = document.getElementById("poster-img");
+    function openPoster(src) { posterImg.src = src; posterLb.hidden = false; document.body.style.overflow = "hidden"; }
+    function closePoster() { posterLb.hidden = true; document.body.style.overflow = ""; }
+    document.getElementById("poster-close").addEventListener("click", closePoster);
+    posterLb.addEventListener("click", e => { if (e.target === posterLb) closePoster(); });
+    addEventListener("keydown", e => { if (e.key === "Escape" && !posterLb.hidden) closePoster(); });
 
     const statusTag = status => {
       const s = String(status || "");
@@ -161,6 +190,20 @@
       top.append(tags);
       card.append(top);
 
+      /* بوستر المبادرة (صورة احترافية قابلة للتكبير) */
+      if (item.poster) {
+        const pb = el("button", "init-poster");
+        pb.type = "button";
+        pb.setAttribute("aria-label", "تكبير بوستر المبادرة");
+        const pimg = document.createElement("img");
+        pimg.src = item.poster;
+        pimg.alt = "بوستر مبادرة مشروع الطاقة الشمسية لدونكي أبوراي";
+        pimg.loading = "lazy";
+        pb.append(pimg);
+        pb.addEventListener("click", () => openPoster(item.poster));
+        card.append(pb);
+      }
+
       if (item.summary) card.append(el("p", "desc", item.summary));
 
       /* نص النداء الكامل: مصفوفة فقرات اختيارية */
@@ -184,7 +227,37 @@
         }
       }
 
-      if (item.account) {
+      /* طريقة التبرع: حسابات بنكية بأرقام عريضة قابلة للنسخ */
+      if (Array.isArray(item.bankAccounts) && item.bankAccounts.length) {
+        const box = el("div", "init-account");
+        box.append(el("strong", null, "طريقة التبرع"));
+        const list = el("div", "pay-list");
+        item.bankAccounts.forEach(a => {
+          const row = el("div", "pay-row");
+          const info = el("div", "pay-info");
+          if (a.bank) info.append(el("span", "pay-bank", a.bank));
+          if (a.label) info.append(el("span", "pay-label", a.label));
+          info.append(el("span", "pay-num", a.value));
+          if (a.holder) info.append(el("span", "pay-holder", "باسم: " + a.holder));
+          const btn = el("button", "pay-copy", "نسخ");
+          btn.type = "button";
+          btn.setAttribute("aria-label", "نسخ الرقم " + a.value);
+          btn.addEventListener("click", () => {
+            const done = () => { btn.textContent = "تم النسخ ✓"; setTimeout(() => { btn.textContent = "نسخ"; }, 1500); };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(a.value).then(done).catch(() => {});
+            } else {
+              const t = document.createElement("textarea"); t.value = a.value; document.body.append(t); t.select();
+              try { document.execCommand("copy"); done(); } catch (e) {}
+              t.remove();
+            }
+          });
+          row.append(info, btn);
+          list.append(row);
+        });
+        box.append(list);
+        card.append(box);
+      } else if (item.account) {
         const box = el("div", "init-account");
         box.append(el("strong", null, "طريقة التبرع"));
         box.append(document.createTextNode(item.account));
