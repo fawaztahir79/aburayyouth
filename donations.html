@@ -61,6 +61,27 @@
     .init-cost{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--green);color:#faf6ee;border-radius:10px;padding:14px 18px}
     .init-cost .cost-label{font:700 14px Cairo}
     .init-cost .cost-value{font:800 20px Cairo;color:#efc879}
+    .init-donations{background:#f3f8f0;border:1px solid #d7e5cc;border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+    .don-title{color:var(--green);font:700 14px Cairo}
+    .don-amounts{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+    .don-raised{display:flex;align-items:baseline;gap:6px}
+    .don-num{font:700 26px/1 'DM Mono',monospace;color:var(--green);direction:ltr;unicode-bidi:plaintext}
+    .don-unit{font:700 12px Tajawal;color:var(--muted)}
+    .don-goal{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:left}
+    .don-goal-label{font-size:11px;color:var(--muted)}
+    .don-goal-val{font:700 14px Cairo;color:var(--brown)}
+    .don-bar{height:12px;background:#e2e9db;border-radius:20px;overflow:hidden}
+    .don-fill{height:100%;background:linear-gradient(90deg,var(--green),#3f8450);border-radius:20px;min-width:5px;transition:width .6s ease}
+    .don-pct{font:600 12px 'DM Mono',monospace;color:var(--muted);direction:rtl}
+    .don-table{width:100%;border-collapse:collapse;font-size:13px}
+    .don-table th,.don-table td{text-align:right;padding:8px 10px;border-bottom:1px solid #e3ecdb}
+    .don-table th{font:700 12px Cairo;color:var(--green);background:#eaf2e4}
+    .don-table td{color:var(--ink)}
+    .don-table .don-rank{color:var(--muted);font:500 12px 'DM Mono';width:34px}
+    .don-table .don-amt{font:700 13px Cairo;color:var(--brown);white-space:nowrap}
+    .don-table tbody tr:last-child td{border-bottom:0}
+    .don-foot td{font-weight:700;color:var(--green);background:#eef5e9;border-top:2px solid #cfe0c2}
+    .don-foot .don-amt{color:var(--green);font:700 14px 'DM Mono',monospace;direction:ltr;unicode-bidi:plaintext;display:inline-block}
     .pay-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
     .pay-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fffdf8;border:1px solid var(--line);border-radius:8px;padding:12px 14px;flex-wrap:wrap}
     .pay-info{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -215,6 +236,69 @@
         cost.append(el("span", "cost-label", "التكلفة التقديرية للمشروع"));
         cost.append(el("span", "cost-value", item.estimatedCost));
         card.append(cost);
+      }
+
+      /* التبرعات: إجمالي + شريط تقدّم نحو الهدف + كشف تفصيلي */
+      if (item.donations && Array.isArray(item.donations.log)) {
+        const d = item.donations;
+        const log = d.log.filter(x => x && typeof x.amount === "number");
+        if (log.length) {
+          const raised = log.reduce((s, x) => s + x.amount, 0);
+          const goal = Number(d.goal) || 0;
+          const pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
+          const fmt = n => Number(n).toLocaleString("en-US");
+          const pctText = pct >= 10 ? Math.round(pct) + "%" : (Math.round(pct * 10) / 10) + "%";
+
+          const box = el("div", "init-donations");
+          box.append(el("strong", "don-title", "التبرعات حتى الآن"));
+
+          const amounts = el("div", "don-amounts");
+          const raisedWrap = el("div", "don-raised");
+          raisedWrap.append(el("span", "don-num", fmt(raised)));
+          raisedWrap.append(el("span", "don-unit", d.currency || "جنيه سوداني"));
+          amounts.append(raisedWrap);
+          if (d.goalLabel) {
+            const goalWrap = el("div", "don-goal");
+            goalWrap.append(el("span", "don-goal-label", "من أصل هدف"));
+            goalWrap.append(el("span", "don-goal-val", d.goalLabel));
+            amounts.append(goalWrap);
+          }
+          box.append(amounts);
+
+          const bar = el("div", "don-bar");
+          const fill = el("div", "don-fill");
+          fill.style.width = pct.toFixed(2) + "%";
+          bar.append(fill);
+          box.append(bar);
+
+          box.append(el("div", "don-pct", "نسبة الإنجاز: " + pctText + " · عدد المساهمين: " + log.length));
+
+          const table = el("table", "don-table");
+          const thead = el("thead");
+          const htr = document.createElement("tr");
+          ["#", "المتبرّع", "المبلغ"].forEach(h => htr.append(el("th", null, h)));
+          thead.append(htr);
+          table.append(thead);
+          const tbody = el("tbody");
+          log.forEach((x, i) => {
+            const tr = document.createElement("tr");
+            tr.append(el("td", "don-rank", String(i + 1)));
+            tr.append(el("td", null, x.donor || "متبرّع"));
+            tr.append(el("td", "don-amt", x.label || fmt(x.amount) + " جنيه"));
+            tbody.append(tr);
+          });
+          table.append(tbody);
+          const tfoot = el("tfoot");
+          const ftr = el("tr", "don-foot");
+          ftr.append(el("td", null, ""));
+          ftr.append(el("td", null, "الإجمالي"));
+          ftr.append(el("td", "don-amt", fmt(raised)));
+          tfoot.append(ftr);
+          table.append(tfoot);
+          box.append(table);
+
+          card.append(box);
+        }
       }
 
       /* نص النداء الكامل: مصفوفة فقرات اختيارية */
