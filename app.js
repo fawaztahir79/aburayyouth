@@ -143,11 +143,14 @@ fetch("data/villages.json", { cache: "no-cache" })
     if (searchCount) searchCount.textContent = `${villages.length} قرية`;
     if (villageSearch) villageSearch.addEventListener("input", applySearch);
 
-    document.getElementById("serviceCount").textContent = guides.filter(village => {
-      const guide = village.guide;
-      return guide.water || guide.education || guide.health || guide.market;
+    /* قرية لها معلومات = لها دليل مفصّل أو سجل مختصر؛ بهذا تتطابق الأرقام مع لوحة المؤشرات */
+    const hasRecord = village => village.record && Object.values(village.record).some(value => String(value ?? "").trim() !== "");
+    const source = village => village.guide || (hasRecord(village) ? village.record : null);
+    document.getElementById("serviceCount").textContent = villages.filter(village => {
+      const info = source(village);
+      return info && (info.water || info.education || info.health || info.market);
     }).length;
-    document.getElementById("knownCount").textContent = guides.filter(village => village.guide.note).length;
+    document.getElementById("knownCount").textContent = villages.filter(village => (village.guide && village.guide.note) || hasRecord(village)).length;
     document.getElementById("villageCount").textContent = villages.length;
   })
   .catch(error => {

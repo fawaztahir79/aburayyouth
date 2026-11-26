@@ -49,6 +49,8 @@
     .svc .svc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
     .svc h3{margin:0;font:700 18px Cairo;color:var(--green)}
     .svc p{margin:0;font-size:14px;line-height:1.9;color:var(--ink)}
+    .svc p.rec{font-weight:700}
+    .svc p.gd{font-size:13px;color:var(--muted)}
     .vp-two{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;padding:46px 0 0}
     .vp-note{background:var(--paper);border:1px solid var(--line);border-top:6px solid var(--gold);border-radius:12px;padding:24px}
     .vp-note h2{margin:0 0 8px;font:700 22px Cairo;color:var(--green)}
@@ -88,7 +90,7 @@
         <a class="header-join" href="index.html#villages">دليل القرى <span>↗</span></a>
       </div>
       <nav class="main-nav" aria-label="التنقل الرئيسي">
-        <a href="index.html">الرئيسية</a><a href="index.html#villages">القرى</a><a href="form.html">استمارة التوثيق</a><a href="donations.html">التبرعات والمبادرات</a>
+        <a href="index.html">الرئيسية</a><a href="index.html#villages">القرى</a><a href="dashboard.html">لوحة المؤشرات</a><a href="form.html">استمارة التوثيق</a><a href="donations.html">التبرعات والمبادرات</a>
       </nav>
     </header>
 
@@ -110,6 +112,7 @@
     <p id="lbCap"></p>
   </div>
 
+  <script src="vdata.js"></script>
   <script>
     /* صفحة القرية: تقرأ ?v=اسم-القرية من data/villages.json وتعرض بياناتها.
        المصدر الوحيد للبيانات هو الملف نفسه. تنبيه: fetch لا يعمل من file:// مباشرة. */
@@ -233,26 +236,34 @@
         galSec.append(el("p", "gal-note", note));
         main.append(galSec);
 
-        /* الخدمات والمرافق */
+        /* الخدمات والمرافق: السطر الأول هو السجل المختصر (record)، وتحته تفاصيل الاستمارات (guide) إن وُجدت.
+           شارة الحالة تُحسب من السجل بمنطق vdata.js نفسه الذي تستخدمه لوحة المؤشرات. */
+        const asBadge = st => ({ k: st.k === "good" ? "ok" : st.k === "bad" ? "no" : "mid", l: st.label });
         const svcSec = el("section", "vp-sec");
         svcSec.append(el("h2", null, "الخدمات والمرافق"));
         const grid = el("div", "svc-grid");
+        const popNarrative = (guide && (guide.population || guide.families))
+          ? [guide.population, guide.families].filter(Boolean).join(" — ") : "";
         [
-          ["المياه والطرق", guide?.water || record?.water],
-          ["التعليم", guide?.education || record?.education],
-          ["الصحة", guide?.health || record?.health],
-          ["الشرطة والأمن", record?.police],
-          ["السوق", (record?.market || guide?.market) ? ("يوم السوق: " + (record?.market || guide?.market)) : ""],
-          ["السكان", pop]
-        ].forEach(([title, val]) => {
-          const text = val || "لم ترد معلومات كافية في الاستمارات";
-          const st = (title === "السوق") ? { k: "ok", l: "أسبوعي" }
-                   : (title === "السكان") ? { k: reliabilityClass(record?.reliability), l: record?.numbersType || "تقديري" }
-                   : statusOf(val);
+          { title: "المياه والطرق", rec: record?.water, gd: guide?.water, kind: "water" },
+          { title: "التعليم", rec: record?.education, gd: guide?.education, kind: "education" },
+          { title: "الصحة", rec: record?.health, gd: guide?.health, kind: "health" },
+          { title: "الشرطة والأمن", rec: record?.police, gd: "", kind: "" },
+          { title: "السوق", rec: record?.market, gd: guide?.market, kind: "market" },
+          { title: "السكان", rec: record?.population, gd: popNarrative, kind: "population" }
+        ].forEach(({ title, rec, gd, kind }) => {
+          let st;
+          if (kind === "population") st = { k: reliabilityClass(record?.reliability), l: record?.numbersType || "تقديري" };
+          else if (kind && rec) st = asBadge(AbuRay.classify[kind](rec));
+          else if (kind === "market" && gd) st = asBadge(AbuRay.classify.market(gd));
+          else st = statusOf(rec || gd);
           const card = el("div", "svc");
           const top = el("div", "svc-top");
           top.append(el("h3", null, title), el("span", "badge " + st.k, st.l));
-          card.append(top, el("p", null, text));
+          card.append(top);
+          if (rec) card.append(el("p", "rec", rec));
+          if (gd) card.append(el("p", "gd", gd));
+          if (!rec && !gd) card.append(el("p", null, "لم ترد معلومات كافية في الاستمارات"));
           grid.append(card);
         });
         svcSec.append(grid);
@@ -264,10 +275,14 @@
         noteBox.append(el("h2", null, "كيف نقرأ هذه البيانات"));
         const explain = [
           record?.reviewStatus ? ("حالة المراجعة: " + record.reviewStatus + ".") : "",
-          guide?.review || record?.reviewNotes || "",
+          guide?.review ? guide.review.replace(/[.؟!]+$/, "") + "." : "",
+          record?.reviewNotes ? ("ملاحظة السجل: " + record.reviewNotes.replace(/[.؟!]+$/, "") + ".") : "",
+          record ? "السطر الأول في كل بطاقة أعلاه من السجل المختصر، وتحته تفاصيل الاستمارات." : "",
           "الأرقام المتعارضة محفوظة كما وردت، ولا يُعد أي رقم مرجعاً رسمياً قبل اعتماده."
         ].filter(Boolean).join(" ");
         noteBox.append(el("p", null, explain));
+        const dashLink = el("a", "text-link", "قارن مع بقية القرى في لوحة المؤشرات ←"); dashLink.href = "dashboard.html#table";
+        const dashP = el("p"); dashP.style.marginTop = "12px"; dashP.append(dashLink); noteBox.append(dashP);
         const cta = el("div", "vp-cta");
         cta.append(el("h2", null, `من أهل ${name}؟`), el("p", null, "صحّح معلومة أو أضف صورة، فمعلومتك تبني ذاكرة القرية."));
         const row = el("div", "row");

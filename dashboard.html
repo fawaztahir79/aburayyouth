@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="لوحة مؤشرات قرى إدارية أبوراي: المياه والصحة والتعليم والأسواق وعدد السكان، من بيانات أولية قيد المراجعة." />
+  <meta property="og:title" content="لوحة مؤشرات القرى | شباب إدارية أبوراي" />
+  <meta property="og:description" content="أبوراي .. تجمعنا. ملخص بصري لبيانات القرى الموثقة: الخدمات والسكان والأسواق." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:url" content="https://abu-ray.com/dashboard.html" />
+  <meta property="og:image" content="https://abu-ray.com/brand-banner.jpg" />
+  <link rel="canonical" href="https://abu-ray.com/dashboard.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>لوحة مؤشرات القرى | شباب إدارية أبوراي</title>
+  <link rel="icon" type="image/jpeg" href="brand-logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* لوحة المؤشرات — تبني على متغيرات الهوية في styles.css.
+       ألوان الحالة ثابتة ولا تتبع الهوية: لا تُستعمل للون وحده بل مع أيقونة ونص (✓ ! ✕ –). */
+    :root{--good:#0aac23;--warn:#fbb315;--bad:#dc3c3d;--unk:#c2c2c2;--on-warn:#0b0b0b;--baseline:#c2c2c2;--track:#dfe9df}
+
+    .dash-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:46px 0 10px}
+    .dash-hero h1{font:800 clamp(36px,5vw,58px)/1.2 Cairo;color:var(--green);letter-spacing:-1.5px;margin:0 0 14px}
+    .dash-hero h1 span{font-family:Georgia,serif;font-weight:400;color:var(--brown)}
+    .dash-hero .lead{font-size:15px;line-height:2;color:var(--muted);max-width:620px;margin:0}
+    .dash-hero .meta{font-size:12px;color:var(--muted);margin:14px 0 0}
+    .cover{background:var(--paper);border:1px solid var(--line);border-bottom:5px solid var(--gold);border-radius:12px;padding:26px 28px}
+    .cover-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+    .hero-fig{font:800 clamp(60px,8vw,88px)/1 Cairo;color:var(--green)}
+    .hero-of{font:600 17px Cairo;color:var(--muted)}
+    .meter{height:10px;border-radius:5px;background:var(--track);overflow:hidden;margin:18px 0 10px}
+    .meter>i{display:block;height:100%;background:var(--green);border-radius:5px}
+    .cov-note{font-size:13px;color:var(--muted);line-height:1.9;margin:0 0 16px}
+
+    .ico{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font:800 11px/1 Tajawal;color:#fff;flex:none}
+    .ico.good{background:var(--good)}.ico.bad{background:var(--bad)}
+    .ico.warn{background:var(--warn);color:var(--on-warn)}.ico.unk{background:var(--unk);color:var(--on-warn)}
+
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 0}
+    .kpi{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+    .kpi .k-label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 8px}
+    .kpi .k-val{font:800 36px/1.1 Cairo;color:var(--green)}
+    .kpi .k-val small{font:600 15px Cairo;color:var(--muted)}
+    .kpi .k-sub{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+    .viz-sec{padding:54px 0 0}
+    .viz-sec .section-heading{margin-bottom:22px}
+    .viz{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 26px}
+    .viz figcaption .t{font:700 19px Cairo;color:var(--green)}
+    .viz figcaption .s{font-size:13px;color:var(--muted);line-height:1.9;margin-top:4px;max-width:760px}
+    .legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:16px 0 0;font-size:13px;color:var(--muted)}
+    .legend span{display:inline-flex;align-items:center;gap:7px}
+
+    .svc-rows{display:grid;gap:14px;margin-top:18px}
+    .svc-row{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:14px}
+    .svc-name{font:700 15px Cairo;color:var(--ink)}
+    .stack{display:flex;gap:2px;height:24px;overflow:hidden;border-start-end-radius:4px;border-end-end-radius:4px}
+    .seg{flex:1 1 0;min-width:0;border:0;margin:0;padding:0 6px;display:flex;align-items:center;justify-content:center;font:700 12px Tajawal;color:#fff;cursor:pointer}
+    .seg .in{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+    .seg.good{background:var(--good)}.seg.bad{background:var(--bad)}
+    .seg.warn{background:var(--warn);color:var(--on-warn)}.seg.unk{background:var(--unk);color:var(--on-warn)}
+    .seg:hover{filter:brightness(1.08)}
+    .seg:focus-visible,.pop-track:focus-visible{outline:2px solid var(--ink);outline-offset:-3px}
+    .seg.no-icon .g{display:none}.seg.no-text .in{visibility:hidden}
+
+    .pop-rows{display:grid;gap:10px;margin-top:18px}
+    .pop-row{display:grid;grid-template-columns:110px 1fr 120px;align-items:center;gap:14px}
+    .pop-name{font:700 14px Cairo}.pop-name a{color:var(--ink)}
+    .pop-track{position:relative;height:22px;border-inline-start:1px solid var(--baseline)}
+    .pop-bar,.pop-ext{position:absolute;top:0;bottom:0;background:var(--green);border-start-end-radius:4px;border-end-end-radius:4px}
+    .pop-bar{inset-inline-start:0;width:max(3px,var(--min))}
+    .pop-bar.has-ext{border-radius:0}
+    .pop-ext{inset-inline-start:calc(var(--min) + 2px);width:var(--ext);opacity:.35}
+    .pop-val{font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums}
+    .pop-val small{display:block;color:var(--muted);font-size:11px}
+    .pop-unknown{font-size:13px;color:var(--muted);margin:16px 0 0;line-height:1.9}
+
+    .week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:18px}
+    .day{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:12px 12px 14px;min-height:92px}
+    .day h4{margin:0 0 8px;font:700 14px Cairo;color:var(--green)}
+    .day ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+    .day li{font-size:13px;line-height:1.6}
+    .day li a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+    .day li small{color:var(--muted);font-size:11px}
+    .day .none{font-size:12px;color:var(--muted)}
+
+    .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+    table.dt{border-collapse:collapse;width:100%;min-width:900px;font-size:13px}
+    .dt th{font:700 12px Tajawal;color:var(--muted);text-align:start;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface);white-space:nowrap}
+    .dt td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7}
+    .dt tr:last-child td{border-bottom:0}
+    .dt td.name,.dt td.pop{white-space:nowrap}
+    .dt td.name a{font:700 15px Cairo;color:var(--green)}
+    .dt td.name small{display:block;color:var(--muted);font-size:11px}
+    .st{display:inline-flex;align-items:center;gap:6px;font:700 12px/1.5 Tajawal;color:var(--ink)}
+    .cell-orig{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+    .tbl-note{font-size:12px;color:var(--muted);line-height:1.9;margin:12px 0 0}
+    details.twin{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
+    details.twin summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--green)}
+    details.twin .tbl-wrap{margin-top:12px}
+    details.twin table.dt{min-width:640px}
+
+    .dash-cta{margin:60px 0 70px;background:var(--green);color:#faf6ee;border-radius:12px;padding:30px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .dash-cta h2{margin:0 0 6px;font:700 24px Cairo}
+    .dash-cta p{margin:0;font-size:14px;line-height:1.9;max-width:560px}
+    .dash-cta a{min-height:46px;display:inline-flex;align-items:center;padding:0 20px;border-radius:6px;font-weight:700;font-size:14px;background:var(--gold);color:#173b2a}
+    .dash-error{padding:40px 20px;text-align:center;color:var(--muted)}
+
+    #tip{position:fixed;z-index:60;max-width:270px;background:#191919;color:#efefef;border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.8;box-shadow:0 8px 24px rgba(0,0,0,.25);pointer-events:none}
+    #tip[hidden]{display:none}
+    #tip .v{display:block;font:700 15px Cairo;color:#fff}
+    #tip .n{display:block;color:#c9c9c9}
+    #tip .k{display:inline-block;width:14px;height:3px;border-radius:2px;margin-inline-end:7px;vertical-align:middle}
+
+    @media(max-width:800px){
+      .dash-hero{grid-template-columns:1fr;gap:26px;padding:34px 0 6px}
+      .kpi-row{grid-template-columns:1fr 1fr}
+      .viz-sec{padding-top:44px}
+      .viz-sec .section-heading{flex-direction:column}
+      .viz{padding:20px 16px}
+      .svc-row{grid-template-columns:1fr;gap:6px}
+      .pop-row{grid-template-columns:1fr auto;gap:6px 12px}
+      .pop-track{grid-column:1/-1;grid-row:2}
+      .week{grid-template-columns:1fr}
+      .day{min-height:0;display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:start}
+      .day h4{margin:0}
+      .dash-cta{padding:24px 20px}
+    }
+    @media(max-width:420px){.kpi-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="page-shell" id="top">
+    <header class="site-header">
+      <div class="brand-bar">
+        <a class="brand" href="index.html" aria-label="العودة إلى الموقع الرئيسي"><img src="brand-logo.jpg" alt="شعار أبوراي" /><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a>
+        <a class="header-join" href="index.html#villages">دليل القرى <span>↗</span></a>
+      </div>
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <a href="index.html">الرئيسية</a><a href="index.html#villages">القرى</a><a class="active" href="dashboard.html">لوحة المؤشرات</a><a href="form.html">استمارة التوثيق</a><a href="donations.html">التبرعات والمبادرات</a><a href="index.html#contact">تواصل</a>
+      </nav>
+    </header>
+
+    <div class="beta-notice" role="status" aria-label="تنبيه النسخة التجريبية"><strong>بيانات أولية</strong><span>تعتمد اللوحة على استمارات قيد المراجعة وليست مرجعاً رسمياً. تصنيف الحالات (متوفر / محدود / غير متوفر) آلي من نص السجل وقد يخالف المصدر؛ النص الأصلي كما ورد في الجدول أسفل الصفحة.</span><a href="form.html">ساهم في التصحيح ↗</a></div>
+
+    <main id="dash">
+      <noscript><p class="dash-error">تحتاج لوحة المؤشرات إلى تفعيل جافاسكربت لعرض البيانات.</p></noscript>
+
+      <section class="dash-hero" aria-labelledby="dash-title">
+        <div>
+          <p class="section-kicker">لوحة المؤشرات · بيانات أولية</p>
+          <h1 id="dash-title">القرى <span>في أرقام.</span></h1>
+          <p class="lead">ملخص بصري لما وُثّق حتى الآن في استمارات أبناء الإدارية: المياه والصحة والتعليم والأسواق وعدد السكان. تتحدّث اللوحة تلقائياً كلما أُضيفت بيانات جديدة.</p>
+          <p class="meta" id="latest"></p>
+        </div>
+        <div class="cover">
+          <div class="cover-top"><span class="hero-fig" id="covFig">…</span><span class="hero-of" id="covOf">قرية لها بيانات موثقة</span></div>
+          <div class="meter" id="covMeter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-label="نسبة القرى الموثقة"><i id="covBar" style="width:0"></i></div>
+          <p class="cov-note" id="covNote">جارٍ تحميل البيانات…</p>
+          <a class="button primary" href="form.html">ساهم في توثيق قريتك <span>↗</span></a>
+        </div>
+      </section>
+
+      <section class="kpi-row" id="kpis" aria-label="مؤشرات رئيسية"></section>
+
+      <section class="viz-sec" aria-labelledby="svc-title">
+        <div class="section-heading"><div><p class="section-kicker">الخدمات</p><h2 id="svc-title">ماذا يتوفر <span>في القرى؟</span></h2></div><p class="section-description">حالة المياه والصحة والتعليم والسوق في القرى التي لها سجل.</p></div>
+        <figure class="viz">
+          <figcaption><div class="t">حالة الخدمات في القرى الموثقة</div><div class="s" id="svcSub"></div></figcaption>
+          <div class="legend" id="svcLegend" aria-label="دليل الحالات"></div>
+          <div class="svc-rows" id="svcRows"></div>
+          <details class="twin"><summary>عرض البيانات كجدول</summary><div class="tbl-wrap"><table class="dt" id="svcTwin"></table></div></details>
+        </figure>
+      </section>
+
+      <section class="viz-sec" aria-labelledby="pop-title">
+        <div class="section-heading"><div><p class="section-kicker">السكان</p><h2 id="pop-title">كم عدد <span>أهلها؟</span></h2></div><p class="section-description">أرقام تقديرية كما وردت في الاستمارات، دون جمع أو ترجيح.</p></div>
+        <figure class="viz">
+          <figcaption><div class="t">عدد السكان المُبلَّغ عنه لكل قرية</div><div class="s" id="popSub"></div></figcaption>
+          <div class="pop-rows" id="popRows"></div>
+          <p class="pop-unknown" id="popUnknown"></p>
+          <details class="twin"><summary>عرض البيانات كجدول</summary><div class="tbl-wrap"><table class="dt" id="popTwin"></table></div></details>
+        </figure>
+      </section>
+
+      <section class="viz-sec" aria-labelledby="mk-title">
+        <div class="section-heading"><div><p class="section-kicker">الأسواق</p><h2 id="mk-title">أسواق <span>الأسبوع.</span></h2></div><p class="section-description">اليوم الذي يُقام فيه السوق الأسبوعي في كل قرية، كما ورد في السجل.</p></div>
+        <div class="week" id="week" role="list" aria-label="أسواق الأسبوع"></div>
+      </section>
+
+      <section class="viz-sec" id="table" aria-labelledby="tb-title">
+        <div class="section-heading"><div><p class="section-kicker">كل البيانات</p><h2 id="tb-title">السجل <span>كما ورد.</span></h2></div><p class="section-description">النص الأصلي لكل خانة، بجانب تصنيفها الآلي.</p></div>
+        <div class="tbl-wrap"><table class="dt" id="mainTable"></table></div>
+        <p class="tbl-note">يظهر مركز الإدارية (أبوراي) في الجدول وفي أسواق الأسبوع فقط، ولا يدخل في الأعداد والمخططات. اضغط على اسم أي قرية لفتح صفحتها.</p>
+      </section>
+
+      <section class="dash-cta" aria-label="ساهم">
+        <div><h2>قريتك ليست هنا؟</h2><p>ما زالت معظم القرى بلا بيانات. معلومة واحدة منك عن المياه أو المدرسة أو السوق تُدخل قريتك إلى اللوحة.</p></div>
+        <a href="form.html">املأ استمارة التوثيق ↗</a>
+      </section>
+    </main>
+
+    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span><span class="visitor-stat">عدد الزوار: <strong data-visitor-count aria-live="polite">…</strong></span></footer>
+  </div>
+  <div id="tip" role="tooltip" hidden></div>
+  <div class="floating-wa"><a href="https://wa.me/249912469556" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">واتساب <span>↗</span></a></div>
+
+  <script src="vdata.js"></script>
+  <script>
+    /* لوحة المؤشرات: تقرأ السجلات من data/villages.json (الحقل record) وتصنّفها بمنطق vdata.js.
+       المصدر الوحيد للبيانات هو الملف نفسه؛ أي سجل جديد يظهر هنا تلقائياً. */
+    (function () {
+      "use strict";
+      const A = window.AbuRay;
+      const $ = id => document.getElementById(id);
+      const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+      const fmt = n => Number(n).toLocaleString("en-US");
+      const vWord = n => n === 1 ? "قرية واحدة" : n === 2 ? "قريتان" : n <= 10 ? n + " قرى" : n + " قرية";
+      const vlink = name => { const a = el("a", null, name); a.href = "village.html?v=" + encodeURIComponent(name); return a; };
+      const ORDER = ["good", "warn", "bad", "unk"];
+      const SERVICES = [
+        { f: "water", name: "المياه" },
+        { f: "health", name: "الصحة" },
+        { f: "education", name: "التعليم" },
+        { f: "market", name: "السوق" }
+      ];
+      const ico = k => el("i", "ico " + k, A.STATUS[k].icon);
+
+      /* ---------- التلميح (يزيد على الجدول ولا يحلّ محلّه) ---------- */
+      const tip = $("tip");
+      let pinned = null;
+      function tipShow(d, x, y) {
+        tip.textContent = "";
+        tip.append(el("span", "v", d.value));
+        const line = el("span", "n"); const key = el("i", "k"); key.style.background = d.color;
+        line.append(key, document.createTextNode(d.label)); tip.append(line);
+        if (d.items && d.items.length) tip.append(el("span", "n", d.items.join("، ")));
+        tip.hidden = false;
+        const w = tip.offsetWidth, h = tip.offsetHeight, pad = 8;
+        tip.style.left = Math.min(Math.max(pad, x - w / 2), innerWidth - w - pad) + "px";
+        tip.style.top = (y - h - 14 < pad ? y + 18 : y - h - 14) + "px";
+      }
+      function bindTip(node, d) {
+        const anchor = () => { const r = node.getBoundingClientRect(); return [r.left + r.width / 2, r.top]; };
+        node.addEventListener("pointermove", e => { if (e.pointerType === "mouse") tipShow(d, e.clientX, e.clientY); });
+        node.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && pinned !== node) tip.hidden = true; });
+        node.addEventListener("focus", () => tipShow(d, ...anchor()));
+        node.addEventListener("blur", () => { if (pinned !== node) tip.hidden = true; });
+        node.addEventListener("click", e => {
+          e.stopPropagation();
+          if (pinned === node) { pinned = null; tip.hidden = true; return; }
+          pinned = node; tipShow(d, ...anchor());
+        });
+      }
+      document.addEventListener("click", () => { pinned = null; tip.hidden = true; });
+      addEventListener("scroll", () => { if (!pinned) tip.hidden = true; }, { passive: true });
+
+      /* ---------- الأقسام ---------- */
+      function renderCoverage(total, documented, latest) {
+        const pct = total ? Math.round(documented / total * 100) : 0;
+        $("covFig").textContent = documented;
+        $("covOf").textContent = `من ${total} قرية لها بيانات موثقة`;
+        $("covBar").style.width = pct + "%";
+        $("covMeter").setAttribute("aria-valuenow", pct);
+        $("covNote").textContent = `${pct}% من قرى الإدارية. ${total - documented} قرية بلا بيانات بعد.`;
+        if (latest) $("latest").textContent = "آخر تحديث للسجلات: " + latest;
+      }
+
+      function kpi(k, label, value, of, sub) {
+        const t = el("div", "kpi");
+        const l = el("p", "k-label"); l.append(ico(k), document.createTextNode(label));
+        const v = el("div", "k-val"); v.append(document.createTextNode(String(value)));
+        if (of != null) v.append(el("small", null, " من " + of));
+        t.append(l, v);
+        if (sub) t.append(el("p", "k-sub", sub));
+        return t;
+      }
+
+      function renderKpis(rows) {
+        const cnt = (f, k) => rows.filter(r => r[f].k === k).length;
+        const known = f => rows.filter(r => r[f].k !== "unk").length;
+        const schools = rows.filter(r => r.education.k === "good" || r.education.k === "warn").length;
+        const host = $("kpis"); host.textContent = "";
+        host.append(
+          kpi("warn", "قرى بمياه شحيحة أو غير متوفرة", cnt("water", "warn") + cnt("water", "bad"), known("water")),
+          kpi("bad", "قرى بلا منشأة صحية عاملة", cnt("health", "bad"), known("health")),
+          kpi("warn", "قرى مدارسها تحتاج صيانة", cnt("education", "warn"), schools,
+            schools > 0 && cnt("education", "warn") === schools ? "كل المدارس الموثقة" : ""),
+          kpi("bad", "قرى بلا سوق", cnt("market", "bad"), known("market"))
+        );
+      }
+
+      function renderServices(rows) {
+        const host = $("svcRows"); host.textContent = "";
+        const used = new Set(); const twin = [];
+        SERVICES.forEach(svc => {
+          const groups = { good: [], warn: [], bad: [], unk: [] }, labels = {};
+          rows.forEach(r => { const s = r[svc.f]; groups[s.k].push(r.name); labels[s.k] = labels[s.k] || s.label; });
+          const row = el("div", "svc-row"); row.append(el("div", "svc-name", svc.name));
+          const stack = el("div", "stack"); stack.setAttribute("role", "group");
+          const parts = [];
+          ORDER.forEach(k => {
+            const names = groups[k]; if (!names.length) return;
+            used.add(k);
+            const seg = el("button", "seg " + k); seg.type = "button"; seg.style.flexGrow = names.length;
+            const inner = el("span", "in"); inner.append(el("span", "g", A.STATUS[k].icon), el("span", "c", String(names.length)));
+            seg.append(inner);
+            const label = `${svc.name} · ${labels[k]}`;
+            seg.setAttribute("aria-label", `${label}: ${vWord(names.length)} (${names.join("، ")})`);
+            bindTip(seg, { value: vWord(names.length), label, color: `var(--${k})`, items: names });
+            stack.append(seg); parts.push(`${labels[k]} ${names.length}`);
+          });
+          stack.setAttribute("aria-label", `${svc.name}: ${parts.join("، ")}`);
+          row.append(stack); host.append(row);
+          twin.push({ svc, groups, labels });
+        });
+
+        $("svcSub").textContent = `كل شريط يمثل ${rows.length} قرية لها سجل، مقسومة حسب الحالة. مرّر أو اضغط على أي جزء لمعرفة القرى.`;
+        const legend = $("svcLegend"); legend.textContent = "";
+        ORDER.filter(k => used.has(k)).forEach(k => { const s = el("span"); s.append(ico(k), document.createTextNode(A.STATUS[k].label)); legend.append(s); });
+
+        /* نظير الجدول */
+        const t = $("svcTwin"); t.textContent = "";
+        const head = el("tr"); head.append(el("th", null, "الخدمة"));
+        const cols = ORDER.filter(k => used.has(k));
+        cols.forEach(k => head.append(el("th", null, A.STATUS[k].label)));
+        const thead = el("thead"); thead.append(head); t.append(thead);
+        const tb = el("tbody");
+        twin.forEach(({ svc, groups, labels }) => {
+          const tr = el("tr"); tr.append(el("td", "name", svc.name));
+          cols.forEach(k => {
+            const td = el("td");
+            if (groups[k].length) { td.append(el("b", null, String(groups[k].length) + " "), document.createTextNode(`(${labels[k]})`), el("span", "cell-orig", groups[k].join("، "))); }
+            else td.textContent = "0";
+            tr.append(td);
+          });
+          tb.append(tr);
+        });
+        t.append(tb);
+      }
+
+      function renderPopulation(rows) {
+        const withPop = rows.filter(r => r.pop).sort((a, b) => b.pop.min - a.pop.min || b.pop.max - a.pop.max);
+        const unknown = rows.filter(r => !r.pop).map(r => r.name);
+        const host = $("popRows"); host.textContent = "";
+        const axis = Math.max(1, ...withPop.map(r => r.pop.max));
+        const types = [...new Set(rows.map(r => r.rec.numbersType).filter(t => t && !/^غير/.test(t)))];
+        $("popSub").textContent = `${types.length ? "الأرقام " + types.join(" و") + " كما وردت" : "الأرقام كما وردت"}، مرتبة حسب الحدّ الأدنى المُبلَّغ. الجزء الفاتح يمثل المدى حيث تباينت الأرقام. لا نجمعها لأنها غير معتمدة.`;
+        withPop.forEach(r => {
+          const row = el("div", "pop-row");
+          const nm = el("div", "pop-name"); nm.append(vlink(r.name));
+          const track = el("div", "pop-track"); track.tabIndex = 0; track.setAttribute("role", "img");
+          const text = r.pop.range ? `${fmt(r.pop.min)} – ${fmt(r.pop.max)}` : fmt(r.pop.min);
+          track.setAttribute("aria-label", `${r.name}: ${text} نسمة`);
+          const bar = el("div", "pop-bar" + (r.pop.range ? " has-ext" : ""));
+          track.style.setProperty("--min", (r.pop.min / axis * 100) + "%");
+          track.append(bar);
+          if (r.pop.range) { track.style.setProperty("--ext", ((r.pop.max - r.pop.min) / axis * 100) + "%"); track.append(el("div", "pop-ext")); }
+          bindTip(track, { value: text + " نسمة", label: r.name + (r.rec.numbersType ? " · " + r.rec.numbersType : ""), color: "var(--green)", items: [] });
+          const val = el("div", "pop-val", text);
+          if (r.pop.range) val.append(el("small", null, "تقدير متباين"));
+          row.append(nm, track, val); host.append(row);
+        });
+        $("popUnknown").textContent = unknown.length ? `غير مذكور في السجل: ${unknown.join("، ")}.` : "";
+        const t = $("popTwin"); t.textContent = "";
+        const thead = el("thead"), hr = el("tr");
+        ["القرية", "الحد الأدنى", "الحد الأعلى", "النص الأصلي"].forEach(h => hr.append(el("th", null, h))); thead.append(hr); t.append(thead);
+        const tb = el("tbody");
+        rows.forEach(r => {
+          const tr = el("tr"); tr.append(el("td", "name", r.name));
+          tr.append(el("td", null, r.pop ? fmt(r.pop.min) : "—"), el("td", null, r.pop ? fmt(r.pop.max) : "—"), el("td", null, r.rec.population || "—"));
+          tb.append(tr);
+        });
+        t.append(tb);
+      }
+
+      function renderWeek(rows, centers) {
+        const host = $("week"); host.textContent = "";
+        const byDay = A.DAYS.map(() => []);
+        [...rows, ...centers].forEach(r => r.days.forEach(d => byDay[d].push(r)));
+        A.DAYS.forEach((day, i) => {
+          const box = el("div", "day"); box.setAttribute("role", "listitem");
+          box.append(el("h4", null, day));
+          if (!byDay[i].length) { box.append(el("span", "none", "—")); host.append(box); return; }
+          const ul = el("ul");
+          byDay[i].forEach(r => { const li = el("li"); li.append(vlink(r.name)); if (r.isCenter) li.append(document.createTextNode(" "), el("small", null, "(المركز)")); ul.append(li); });
+          box.append(ul); host.append(box);
+        });
+      }
+
+      function chipCell(k, label, orig) {
+        const td = el("td"); const c = el("span", "st"); c.append(ico(k), document.createTextNode(label)); td.append(c);
+        td.append(el("span", "cell-orig", orig || "—")); return td;
+      }
+
+      function renderTable(rows, centers) {
+        const t = $("mainTable"); t.textContent = "";
+        const thead = el("thead"), hr = el("tr");
+        ["القرية", "السكان", "المياه", "التعليم", "الصحة", "السوق", "الموثوقية (كما في السجل)", "آخر تحديث"].forEach(h => hr.append(el("th", null, h)));
+        thead.append(hr); t.append(thead);
+        const tb = el("tbody");
+        [...rows, ...centers].forEach(r => {
+          const tr = el("tr");
+          const nm = el("td", "name"); nm.append(vlink(r.name)); if (r.isCenter) nm.append(el("small", null, "مركز الإدارية"));
+          tr.append(nm);
+          const pop = el("td", "pop"); pop.append(document.createTextNode(r.rec.population || "—"));
+          if (r.rec.numbersType) pop.append(el("span", "cell-orig", r.rec.numbersType));
+          tr.append(pop);
+          tr.append(chipCell(r.water.k, r.water.label, r.rec.water), chipCell(r.education.k, r.education.label, r.rec.education),
+                    chipCell(r.health.k, r.health.label, r.rec.health), chipCell(r.market.k, r.market.label, r.rec.market));
+          tr.append(el("td", null, r.rec.reliability || "—"), el("td", null, r.rec.updated || "—"));
+          tb.append(tr);
+        });
+        t.append(tb);
+      }
+
+      /* لا نقصّ نصاً داخل جزء: نخفي الأيقونة ثم الرقم إن ضاق الجزء (القيمة تبقى في التلميح والجدول) */
+      function fitLabels() {
+        document.querySelectorAll(".seg").forEach(seg => {
+          seg.classList.remove("no-icon", "no-text");
+          const inner = seg.querySelector(".in");
+          const fits = () => inner.scrollWidth + 12 <= seg.clientWidth;
+          if (!fits()) seg.classList.add("no-icon");
+          if (!fits()) seg.classList.add("no-text");
+        });
+      }
+
+      const parseDate = s => { const m = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s || ""); return m ? new Date(+m[3], +m[2] - 1, +m[1]).getTime() : 0; };
+      const toRow = (entry, isCenter) => {
+        const r = entry.record;
+        return {
+          name: entry.name, isCenter, rec: r,
+          water: A.classify.water(r.water), education: A.classify.education(r.education),
+          health: A.classify.health(r.health), market: A.classify.market(r.market),
+          pop: A.parsePopulation(r.population), days: A.marketDays(r.market)
+        };
+      };
+
+      fetch("data/villages.json", { cache: "no-cache" })
+        .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(db => {
+          const villages = (db.villages || []).filter(v => v && v.name);
+          const centers = (db.centers || []).filter(c => c && c.name && A.recordOf(c));
+          const rows = villages.filter(v => A.recordOf(v)).map(v => toRow(v, false));
+          const centerRows = centers.map(c => toRow(c, true));
+          const latestTs = Math.max(0, ...[...rows, ...centerRows].map(r => parseDate(r.rec.updated)));
+          const latest = latestTs ? new Date(latestTs).toLocaleDateString("en-GB") : "";
+          renderCoverage(villages.length, rows.length, latest);
+          if (!rows.length) { $("kpis").append(el("p", "dash-error", "لا توجد سجلات لعرضها بعد.")); return; }
+          renderKpis(rows); renderServices(rows); renderPopulation(rows); renderWeek(rows, centerRows); renderTable(rows, centerRows);
+          fitLabels();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
+          if (window.ResizeObserver) new ResizeObserver(fitLabels).observe($("svcRows")); else addEventListener("resize", fitLabels);
+        })
+        .catch(error => {
+          console.error("تعذّر تحميل بيانات اللوحة", error);
+          $("covNote").textContent = "";
+          $("kpis").textContent = "";
+          $("kpis").append(el("p", "dash-error", "تعذّر تحميل البيانات. أعد المحاولة لاحقاً."));
+        });
+    })();
+  </script>
+  <script src="visitor-counter.js" defer></script>
+</body>
+</html>
