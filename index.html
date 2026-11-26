@@ -57,7 +57,7 @@
         <a class="header-join" href="https://www.facebook.com/share/g/1E6NHGtmCt/" target="_blank" rel="noopener">انضم إلى المجموعة <span>↗</span></a>
       </div>
       <nav class="main-nav" aria-label="التنقل الرئيسي">
-        <a class="active" href="#top">الرئيسية</a><a href="#about">عن الإدارية</a><a href="#location">الموقع</a><a href="#boundary-map">الحدود الجغرافية</a><a href="#villages">القرى</a><a href="form.html">استمارة التوثيق</a><a href="database.html">قاعدة البيانات</a><a href="donations.html">التبرعات والمبادرات</a><a href="#activities">الأنشطة</a><a href="#gallery">المعرض</a><a href="#contact">تواصل</a>
+        <a class="active" href="#top">الرئيسية</a><a href="#location">الموقع والحدود</a><a href="#villages">القرى</a><a href="form.html">استمارة التوثيق</a><a href="donations.html">التبرعات والمبادرات</a><a href="#contact">تواصل</a>
       </nav>
     </header>
 
@@ -85,14 +85,18 @@
 
       <section class="stats" aria-label="إحصاءات الدليل"><div class="stat"><strong id="villageCount">34</strong><span>قرية في الدليل</span></div><div class="stat"><strong id="knownCount">8</strong><span>قرى لها معلومات</span></div><div class="stat"><strong id="serviceCount">0</strong><span>خدمة موثقة</span></div><div class="stat stat-note"><span class="status-dot"></span><span>بيانات أولية قيد المراجعة</span></div></section>
 
-      <section class="location-section content-section" id="location"><div class="section-heading"><div><p class="section-kicker">الموقع</p><h2>أبوراي في <span>المشهد.</span></h2></div><p class="section-description">مخطط تقريبي للمسافات، يقرّب المكان لمن لم يزره بعد.</p></div><div class="location-card"><div class="route-line"><span>غبيش</span><i></i><b>أبوراي</b><i></i><span>النهود</span></div><p>نحو 65 كم شرق غبيش · نحو 70 كم غرب النهود</p><a class="button primary" href="https://maps.app.goo.gl/JJbq8PUm1AYqKfkm8?g_st=ac" target="_blank" rel="noopener">فتح الموقع على الخريطة <span>↗</span></a></div></section>
-
-      <section class="boundary-map-section content-section" id="boundary-map" aria-labelledby="boundary-map-title"><div class="section-heading"><div><p class="section-kicker">الحدود الجغرافية</p><h2 id="boundary-map-title">إدارية أبوراي <span>على الخريطة.</span></h2></div><p class="section-description">خريطة Google My Maps تبيّن نطاق الإدارية وحدودها الجغرافية والقرى والمواقع المرتبطة بها.</p></div><div class="map-frame-wrap"><iframe src="https://www.google.com/maps/d/embed?mid=1WD9rBjG9d7V2jQZLgzwLV3NvNpbwanc&amp;ehbc=2E312F" title="الحدود الجغرافية لإدارية أبوراي" loading="eager" allowfullscreen></iframe></div><div class="map-actions"><span>المصدر: خريطة إدارية أبوراي على Google My Maps</span><a class="button primary" href="https://www.google.com/maps/d/viewer?mid=1WD9rBjG9d7V2jQZLgzwLV3NvNpbwanc" target="_blank" rel="noopener">فتح الخريطة كاملة <span>↗</span></a></div></section>
+      <section class="location-section content-section" id="location" aria-labelledby="location-title">
+        <div class="section-heading"><div><p class="section-kicker">الموقع والحدود</p><h2 id="location-title">أبوراي في <span>المشهد وعلى الخريطة.</span></h2></div><p class="section-description">مخطط تقريبي للمسافات يقرّب المكان لمن لم يزره بعد، وخريطة Google My Maps تبيّن نطاق الإدارية وحدودها الجغرافية والقرى والمواقع المرتبطة بها.</p></div>
+        <div class="location-card"><div class="route-line"><span>غبيش</span><i></i><b>أبوراي</b><i></i><span>النهود</span></div><p>نحو 65 كم شرق غبيش · نحو 70 كم غرب النهود</p><a class="button primary" href="https://maps.app.goo.gl/JJbq8PUm1AYqKfkm8?g_st=ac" target="_blank" rel="noopener">فتح الموقع على الخريطة <span>↗</span></a></div>
+        <div class="map-block" id="boundary-map">
+          <div class="map-frame-wrap"><iframe src="https://www.google.com/maps/d/embed?mid=1WD9rBjG9d7V2jQZLgzwLV3NvNpbwanc&amp;ehbc=2E312F" title="الحدود الجغرافية لإدارية أبوراي" loading="eager" allowfullscreen></iframe></div><div class="map-actions"><span>المصدر: خريطة إدارية أبوراي على Google My Maps</span><a class="button primary" href="https://www.google.com/maps/d/viewer?mid=1WD9rBjG9d7V2jQZLgzwLV3NvNpbwanc" target="_blank" rel="noopener">فتح الخريطة كاملة <span>↗</span></a></div>
+        </div>
+      </section>
 
       <section class="villages-section" id="villages" aria-labelledby="villages-title"><div class="section-heading"><div><p class="section-kicker">دليل القرى</p><h2 id="villages-title">أسماءٌ تحفظ <span>المكان.</span></h2></div><div class="heading-note"><span>01</span><p>ابحث عن قريتك<br />واكتشف ما نعرفه عنها</p></div></div><div class="search-wrap"><span class="search-icon">⌕</span><label class="sr-only" for="villageSearch">ابحث عن قرية</label><input id="villageSearch" type="search" placeholder="اكتب اسم القرية للبحث..." autocomplete="off" /><span class="search-count" id="searchCount">34 قرية</span></div><div class="village-list" id="villageList"></div><p class="no-results" id="noResults" hidden>لم نجد قرية بهذا الاسم. جرّب كتابة جزء من الاسم.</p></section>
 
       <section class="contribute-section" aria-labelledby="contribute-title">
-        <div class="contribute-copy"><p class="section-kicker">ذاكرة أبوراي</p><h2 id="contribute-title">كل معلومة تحفظ<br /><span>حكاية قرية.</span></h2><p>ساعدنا في حصر وتوثيق بيانات القرى والخدمات والسكان. اترك المعلومات التي لا تعرفها فارغة، ولا تضع تقديرات على أنها أرقام رسمية.</p><a class="button primary" href="database.html">استعرض قاعدة البيانات <span>↗</span></a><a class="text-link" href="form.html">ساهم في توثيق قريتك <span>↗</span></a></div>
+        <div class="contribute-copy"><p class="section-kicker">ذاكرة أبوراي</p><h2 id="contribute-title">كل معلومة تحفظ<br /><span>حكاية قرية.</span></h2><p>ساعدنا في حصر وتوثيق بيانات القرى والخدمات والسكان. اترك المعلومات التي لا تعرفها فارغة، ولا تضع تقديرات على أنها أرقام رسمية.</p><a class="button primary" href="form.html">ساهم في توثيق قريتك <span>↗</span></a></div>
         <div class="contribute-note"><span class="contribute-icon">✦</span><strong>معلومة منك، ذاكرة للجميع</strong><p>بيانات الاسم ورقم الهاتف تُستخدم للتوثيق الداخلي ولا تُنشر على الموقع، وفق تنبيهات الاستمارة.</p><a class="text-link" href="https://forms.gle/atue3mhBZFK8uHED7" target="_blank" rel="noopener">فتح الاستمارة مباشرة <span>↗</span></a></div>
       </section>
 

@@ -45,16 +45,8 @@ const makeChips = services => {
   return chips;
 };
 
-const databaseLink = () => {
-  const link = document.createElement("a");
-  link.href = "database.html";
-  link.className = "text-link";
-  link.textContent = "عرض السجل في قاعدة البيانات ↗";
-  return link;
-};
-
 /* بناء قائمة القرى من الملف نفسه؛ تُستخدم نسخة الدليل (guide) عند وجودها،
-   ويُشار إلى سجل قاعدة البيانات (record) إن لم تكن هناك استمارة مفصّلة. */
+   ويُستخدم السجل الأولي (record) بديلاً لكل حقل إن لم تكن هناك استمارة مفصّلة. */
 const buildVillage = village => {
   const guide = village.guide || null;
   const record = village.record || null;
@@ -75,10 +67,9 @@ const buildVillage = village => {
     ? [guide.note, guide.review].filter(Boolean).join(" · ")
     : "";
   const fallbackStatus = record
-    ? "لهذه القرية سجل في قاعدة البيانات، ولم تُضف لها استمارة مفصّلة بعد."
+    ? "لهذه القرية سجل أولي، ولم تُضف لها استمارة مفصّلة بعد."
     : "لا توجد استمارة جديدة مرتبطة بهذه القرية بعد.";
   const status = addText(overview, fallbackStatus);
-  if (!guide && record) status.append(" ", databaseLink());
   body.append(makeSection("حالة البيانات", status));
 
   const population = guide

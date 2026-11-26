@@ -64,3 +64,5 @@
 
 /* عنوان احتياطي لصفحة القرية (يستبدله JS بالعنوان الفعلي) */
 .vp-fallback-title{font:800 clamp(32px,5vw,48px)/1.2 Cairo;color:var(--green);margin:24px 0 0;letter-spacing:-1px}
+.map-block{padding-top:34px}
+@media(max-width:800px){.location-section .section-heading{flex-direction:column}}
