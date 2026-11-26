@@ -65,14 +65,14 @@
     .don-title{color:var(--green);font:700 14px Cairo}
     .don-amounts{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
     .don-raised{display:flex;align-items:baseline;gap:6px}
-    .don-num{font:700 26px/1 'DM Mono',monospace;color:var(--green);direction:ltr;unicode-bidi:plaintext}
+    .don-num{font:800 30px/1.1 Cairo;color:var(--green)}
     .don-unit{font:700 12px Tajawal;color:var(--muted)}
     .don-goal{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:left}
     .don-goal-label{font-size:11px;color:var(--muted)}
     .don-goal-val{font:700 14px Cairo;color:var(--brown)}
     .don-bar{height:12px;background:#e2e9db;border-radius:20px;overflow:hidden}
     .don-fill{height:100%;background:linear-gradient(90deg,var(--green),#3f8450);border-radius:20px;min-width:5px;transition:width .6s ease}
-    .don-pct{font:600 12px 'DM Mono',monospace;color:var(--muted);direction:rtl}
+    .don-pct{font:700 12.5px Tajawal;color:var(--muted)}
     .don-table{width:100%;border-collapse:collapse;font-size:13px}
     .don-table th,.don-table td{text-align:right;padding:8px 10px;border-bottom:1px solid #e3ecdb}
     .don-table th{font:700 12px Cairo;color:var(--green);background:#eaf2e4}
@@ -81,7 +81,20 @@
     .don-table .don-amt{font:700 13px Cairo;color:var(--brown);white-space:nowrap}
     .don-table tbody tr:last-child td{border-bottom:0}
     .don-foot td{font-weight:700;color:var(--green);background:#eef5e9;border-top:2px solid #cfe0c2}
-    .don-foot .don-amt{color:var(--green);font:700 14px 'DM Mono',monospace;direction:ltr;unicode-bidi:plaintext;display:inline-block}
+    .don-foot .don-amt{color:var(--green);font:800 14px Cairo}
+    .don-remain{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:600 12.5px Tajawal;color:var(--ink)}
+    .don-remain b{font:700 13px Cairo;color:var(--brown)}
+    .don-updated{font-size:11.5px;color:var(--muted)}
+    .don-cta{display:flex;gap:10px;flex-wrap:wrap}
+    .don-cta a,.don-cta button{min-height:44px;flex:1 1 150px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;border-radius:6px;font:700 14px Tajawal;cursor:pointer;border:0}
+    .don-cta .give-now{background:var(--gold);color:#173b2a}
+    .don-cta .share-wa{background:#1fa855;color:#fff}
+    .don-cta .share-more{background:transparent;border:1px solid var(--green);color:var(--green);flex:0 1 auto}
+    .init-account{scroll-margin-top:130px}
+    .sticky-give{position:fixed;bottom:12px;right:12px;z-index:20;display:none;min-height:44px;align-items:center;gap:8px;padding:0 20px;border-radius:30px;background:var(--gold);color:#173b2a;font:800 14px Tajawal;box-shadow:0 4px 14px rgba(0,0,0,.22);transition:opacity .2s}
+    .sticky-give.hide{opacity:0;pointer-events:none}
+    @media(max-width:800px){.sticky-give{display:inline-flex}}
+    @media(prefers-reduced-motion:reduce){.don-fill,.sticky-give{transition:none}}
     .pay-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
     .pay-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fffdf8;border:1px solid var(--line);border-radius:8px;padding:12px 14px;flex-wrap:wrap}
     .pay-info{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -168,6 +181,7 @@
 
     <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span><span class="visitor-stat">عدد الزوار: <strong data-visitor-count aria-live="polite">…</strong></span></footer>
   </div>
+  <a class="sticky-give hide" id="stickyGive" href="#" hidden>تبرّع الآن ↓</a>
   <div class="floating-wa"><a href="https://wa.me/249912469556" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">واتساب <span>↗</span></a></div>
 
   <div id="poster-lb" hidden role="dialog" aria-label="بوستر المبادرة">
@@ -199,10 +213,24 @@
       return null;
     };
 
+    /* صيغة مقروءة للمبالغ الكبيرة: 4650000000 ← "4.65 مليار" */
+    const human = n => {
+      const v = Number(n) || 0;
+      const trim = x => String(Math.round(x * 100) / 100);
+      if (v >= 1e9) return trim(v / 1e9) + " مليار";
+      if (v >= 1e6) return trim(v / 1e6) + " مليون";
+      return v.toLocaleString("en-US");
+    };
+    const slug = i => "init-" + (i + 1);
+    const pageUrl = id => location.origin + location.pathname + "#" + id;
+
     const waLink = phone => "https://wa.me/" + String(phone || SITE_WA).replace(/[^0-9]/g, "");
 
-    const buildCard = item => {
+    const buildCard = (item, index) => {
       const card = el("div", "init-card");
+      card.id = slug(index);
+      const accountId = card.id + "-pay";
+      let shareText = "مبادرة: " + (item.title || "") + (item.summary ? "\n" + item.summary : "");
       if (Array.isArray(item.details) && item.details.length >= 2) card.classList.add("wide");
 
       const top = el("div", "init-top");
@@ -221,7 +249,7 @@
         pb.setAttribute("aria-label", "تكبير بوستر المبادرة");
         const pimg = document.createElement("img");
         pimg.src = item.poster;
-        pimg.alt = "بوستر مبادرة مشروع الطاقة الشمسية لدونكي أبوراي";
+        pimg.alt = "بوستر " + (item.title || "المبادرة");
         pimg.loading = "lazy";
         pb.append(pimg);
         pb.addEventListener("click", () => openPoster(item.poster));
@@ -254,7 +282,9 @@
 
           const amounts = el("div", "don-amounts");
           const raisedWrap = el("div", "don-raised");
-          raisedWrap.append(el("span", "don-num", fmt(raised)));
+          const num = el("span", "don-num", human(raised));
+          num.title = fmt(raised);
+          raisedWrap.append(num);
           raisedWrap.append(el("span", "don-unit", d.currency || "جنيه سوداني"));
           amounts.append(raisedWrap);
           if (d.goalLabel) {
@@ -272,6 +302,14 @@
           box.append(bar);
 
           box.append(el("div", "don-pct", "نسبة الإنجاز: " + pctText + " · عدد المساهمين: " + log.length));
+          if (goal > raised) {
+            const rem = el("div", "don-remain");
+            rem.append(el("span", null, "المتبقي للوصول إلى الهدف"));
+            rem.append(el("b", null, human(goal - raised) + " " + (d.currency || "جنيه سوداني")));
+            box.append(rem);
+          }
+          if (d.updated) box.append(el("div", "don-updated", "آخر تحديث للكشف: " + d.updated));
+          shareText += "\n\nجُمع حتى الآن " + human(raised) + " " + (d.currency || "جنيه سوداني") + " (" + pctText + ")" + (d.goalLabel ? " من هدف " + d.goalLabel : "") + ".\nساهم ولو بالقليل، وشارك الرابط:";
 
           const table = el("table", "don-table");
           const thead = el("thead");
@@ -284,7 +322,7 @@
             const tr = document.createElement("tr");
             tr.append(el("td", "don-rank", String(i + 1)));
             tr.append(el("td", null, x.donor || "متبرّع"));
-            tr.append(el("td", "don-amt", x.label || fmt(x.amount) + " جنيه"));
+            tr.append(el("td", "don-amt", x.label || human(x.amount) + " جنيه"));
             tbody.append(tr);
           });
           table.append(tbody);
@@ -292,7 +330,7 @@
           const ftr = el("tr", "don-foot");
           ftr.append(el("td", null, ""));
           ftr.append(el("td", null, "الإجمالي"));
-          ftr.append(el("td", "don-amt", fmt(raised)));
+          ftr.append(el("td", "don-amt", human(raised)));
           tfoot.append(ftr);
           table.append(tfoot);
           box.append(table);
@@ -300,6 +338,27 @@
           card.append(box);
         }
       }
+
+      /* أزرار التبرع والمشاركة: أقرب ما يكون من أرقام الإنجاز */
+      const hasPay = (Array.isArray(item.bankAccounts) && item.bankAccounts.length) || item.account;
+      const cta = el("div", "don-cta");
+      if (hasPay) {
+        const give = el("a", "give-now", "تبرّع الآن ↓");
+        give.href = "#" + accountId;
+        cta.append(give);
+      }
+      const link = pageUrl(card.id);
+      const shareWa = el("a", "share-wa", "شارك على واتساب ↗");
+      shareWa.target = "_blank"; shareWa.rel = "noopener";
+      cta.append(shareWa);
+      if (navigator.share) {
+        const more = el("button", "share-more", "مشاركة…");
+        more.type = "button";
+        more.addEventListener("click", () => navigator.share({ title: item.title, text: shareText, url: link }).catch(() => {}));
+        cta.append(more);
+      }
+      shareWa.href = "https://wa.me/?text=" + encodeURIComponent(shareText + "\n" + link);
+      card.append(cta);
 
       /* نص النداء الكامل: مصفوفة فقرات اختيارية */
       if (Array.isArray(item.details) && item.details.length) {
@@ -325,6 +384,7 @@
       /* طريقة التبرع: حسابات بنكية بأرقام عريضة قابلة للنسخ */
       if (Array.isArray(item.bankAccounts) && item.bankAccounts.length) {
         const box = el("div", "init-account");
+        box.id = accountId;
         box.append(el("strong", null, "طريقة التبرع"));
         const list = el("div", "pay-list");
         item.bankAccounts.forEach(a => {
@@ -354,6 +414,7 @@
         card.append(box);
       } else if (item.account) {
         const box = el("div", "init-account");
+        box.id = accountId;
         box.append(el("strong", null, "طريقة التبرع"));
         box.append(document.createTextNode(item.account));
         card.append(box);
@@ -391,7 +452,26 @@
         const items = (db.initiatives || []).filter(i => i && i.title);
 
         if (!items.length) { empty.hidden = false; return; }
-        items.forEach(item => grid.append(buildCard(item)));
+        items.forEach((item, i) => grid.append(buildCard(item, i)));
+
+        /* زر "تبرّع الآن" العائم على الجوال: يقود لأول حساب تبرع، ويختفي حين تظهر الحسابات */
+        const firstPay = grid.querySelector(".init-account");
+        const sticky = document.getElementById("stickyGive");
+        if (firstPay) {
+          sticky.href = "#" + firstPay.id;
+          sticky.hidden = false;
+          const pays = grid.querySelectorAll(".init-account");
+          const seen = new Set();
+          const io = new IntersectionObserver(entries => {
+            entries.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target));
+            sticky.classList.toggle("hide", seen.size > 0 || scrollY < 300);
+          });
+          pays.forEach(p => io.observe(p));
+          addEventListener("scroll", () => sticky.classList.toggle("hide", seen.size > 0 || scrollY < 300), { passive: true });
+        }
+
+        /* الوصول المباشر لمبادرة من رابط مشترك */
+        if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
       })
       .catch(error => {
         console.error("تعذّر تحميل المبادرات", error);
