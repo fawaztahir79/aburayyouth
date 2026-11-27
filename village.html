@@ -289,6 +289,8 @@
             needSec.append(needGrid);
             if (needs.other) needSec.append(el("p", "gal-note", needs.other));
             needSec.append(el("p", "gal-note", "كما ذكرها من عبّأوا الاستمارات، وهي غير معتمدة رسمياً."));
+            const giveP = el("p", "gal-note"); const giveA = el("a", "text-link", "لسدّ احتياجات القرى: التبرعات والمبادرات ←"); giveA.href = "donations.html#needs";
+            giveP.append(giveA); needSec.append(giveP);
           } else {
             needSec.append(el("p", "gal-note", "لم تذكر الاستمارات احتياجات محددة لهذه القرية بعد."));
           }

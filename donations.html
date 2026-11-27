@@ -123,11 +123,31 @@
     .trust-cta h2{font:700 22px Cairo;margin:0}
     .trust-cta p{font-size:14px;line-height:1.9;margin:0}
     .trust-cta a{min-height:46px;display:inline-flex;align-items:center;gap:8px;padding:0 18px;border-radius:6px;font-weight:700;font-size:14px;background:var(--gold);color:#173b2a;align-self:flex-start}
+    /* احتياجات القرى: للتعريف لا للتبرع، فلا تأخذ الحدّ الذهبي الذي تتميّز به بطاقات المبادرات */
+    .needs-lead{font-size:14px;line-height:2;color:var(--muted);max-width:760px;margin:0 0 20px}
+    .need-filter{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+    .need-chip{min-height:40px;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:30px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:700 13px Tajawal;cursor:pointer}
+    .need-chip span{font:500 12px 'DM Mono';color:var(--muted)}
+    .need-chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#faf6ee}
+    .need-chip[aria-pressed="true"] span{color:#efc879}
+    .need-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .need-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:14px}
+    .need-card h3{font:700 19px Cairo;color:var(--green);margin:0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .need-card h3 a{color:inherit}
+    .need-card dl{margin:0;display:grid;gap:10px}
+    .need-card dt{font:700 11px Tajawal;color:var(--brown)}
+    .need-card dd{margin:2px 0 0;font-size:13.5px;line-height:1.9;color:var(--ink)}
+    .need-card .need-other{font-size:12px;color:var(--muted);line-height:1.8;margin:0}
+    .needs-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--muted);line-height:1.9}
+    .needs-foot a.link{color:var(--green);font-weight:700}
+    .need-suggest{min-height:44px;display:inline-flex;align-items:center;padding:0 18px;border-radius:6px;background:var(--gold);color:#173b2a;font-weight:700;font-size:14px}
+    @media(max-width:1000px){.need-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:800px){
       .give-steps{grid-template-columns:1fr}
       .give-steps article{padding:20px 0;border:0;border-bottom:1px solid var(--line)}
       .init-grid{grid-template-columns:1fr}
       .trust{grid-template-columns:1fr}
+      .need-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -164,6 +184,17 @@
           <strong>لا توجد مبادرات معروضة الآن</strong>
           تُضاف المبادرات هنا فور انطلاقها. إن كانت لديك مبادرة لخدمة الإدارية، <a href="https://wa.me/249912469556" target="_blank" rel="noopener">تواصل معنا عبر واتساب</a> لإدراجها.
         </p>
+      </section>
+
+      <section class="give-sec" id="needs" aria-labelledby="needs-title" hidden>
+        <div class="section-heading"><div><p class="section-kicker">احتياجات القرى</p><h2 id="needs-title">ما تحتاجه <span>القرى.</span></h2></div></div>
+        <p class="needs-lead">احتياجات ذكرها أهالي القرى المسجلة في الاستمارات. هي غير معتمدة رسمياً، وليست مبادرات قائمة ولا طلبات تبرع: التبرع يكون للمبادرات المعروضة أعلاه فقط. وإن أردت سدّ احتياج بعينه فاقترح مبادرة له، لنعرّف بها هنا.</p>
+        <div class="need-filter" id="needFilter" role="group" aria-label="تصفية الاحتياجات حسب المجال"></div>
+        <div class="need-grid" id="needGrid"></div>
+        <div class="needs-foot">
+          <span>لمقارنة الاحتياجات الأكثر تكراراً بين القرى: <a class="link" href="dashboard.html#needs">لوحة المؤشرات ←</a></span>
+          <a class="need-suggest" href="https://wa.me/249912469556" target="_blank" rel="noopener">اقترح مبادرة لسدّ احتياج ↗</a>
+        </div>
       </section>
 
       <section class="trust">
@@ -479,6 +510,73 @@
         empty.hidden = false;
         empty.textContent = "تعذّر تحميل المبادرات. أعد المحاولة لاحقاً.";
       });
+  </script>
+  <script src="vdata.js"></script>
+  <script>
+    /* احتياجات القرى: تُقرأ من data/villages.json (الحقل needs) للقرى المسجلة فقط، وللتعريف لا للتبرع:
+       التبرع يكون للمبادرات المعروضة أعلاه، والموقع لا يجمع الأموال. */
+    (function () {
+      "use strict";
+      const A = window.AbuRay;
+      const sec = document.getElementById("needs");
+      if (!A || !sec) return;
+      const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+      fetch("data/villages.json", { cache: "no-cache" })
+        .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(db => {
+          const villages = (db.villages || []).filter(v => v && v.name);
+          const centers = (db.centers || []).filter(c => c && c.name);
+          const items = [...villages.map(v => ({ v, center: false })), ...centers.map(v => ({ v, center: true }))]
+            .map(({ v, center }) => ({ name: v.name, center, needs: A.needsOf(v) }))
+            .filter(x => x.needs);
+          if (!items.length) return;
+
+          let domain = "all";
+          const grid = document.getElementById("needGrid");
+          const bar = document.getElementById("needFilter");
+
+          function render() {
+            grid.textContent = "";
+            items.forEach(it => {
+              const shown = A.NEED_DOMAINS.filter(d => it.needs[d.id] && (domain === "all" || domain === d.id));
+              if (!shown.length) return;
+              const card = mk("article", "need-card");
+              const h = mk("h3"); const a = mk("a", null, it.name); a.href = "village.html?v=" + encodeURIComponent(it.name); h.append(a);
+              if (it.center) h.append(mk("span", "tag type", "مركز الإدارية"));
+              const dl = mk("dl");
+              shown.forEach(d => { const box = mk("div"); box.append(mk("dt", null, d.name), mk("dd", null, it.needs[d.id].text)); dl.append(box); });
+              card.append(h, dl);
+              if (domain === "all" && it.needs.other) card.append(mk("p", "need-other", it.needs.other));
+              grid.append(card);
+            });
+          }
+
+          [{ id: "all", name: "الكل" }, ...A.NEED_DOMAINS].forEach(d => {
+            const n = d.id === "all" ? items.length : items.filter(i => i.needs[d.id]).length;
+            const b = mk("button", "need-chip"); b.type = "button"; b.setAttribute("aria-pressed", d.id === "all" ? "true" : "false");
+            b.append(document.createTextNode(d.name + " "), mk("span", null, String(n)));
+            b.addEventListener("click", () => {
+              domain = d.id;
+              bar.querySelectorAll(".need-chip").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+              render();
+            });
+            bar.append(b);
+          });
+          render();
+          sec.hidden = false;
+          /* الرابط المباشر #needs: ننتظر رسم المبادرات (وهي فوق هذا القسم) حتى لا تدفعه للأسفل بعد القفز */
+          if (location.hash === "#needs") {
+            const g = document.getElementById("initGrid"), empty = document.getElementById("initEmpty");
+            let tries = 0;
+            const go = () => {
+              const ready = g && (g.childElementCount > 0 || (empty && !empty.hidden)) && document.readyState === "complete";
+              if (ready || ++tries > 30) sec.scrollIntoView(); else setTimeout(go, 150);
+            };
+            go();
+          }
+        })
+        .catch(error => console.error("تعذّر تحميل احتياجات القرى", error));
+    })();
   </script>
   <script src="visitor-counter.js" defer></script>
 </body>
