@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="التوثيقات: توثيقات لأشخاص ومآثر تحفظ ذاكرة المكان، تُنسب كل منها إلى من وثّقها." />
+  <meta property="og:title" content="التوثيقات | شباب إدارية أبوراي" />
+  <meta property="og:description" content="أبوراي .. تجمعنا. توثيقات لأشخاص ومآثر تحفظ ذاكرة المكان." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:url" content="https://abu-ray.com/tawtheeq.html" />
+  <meta property="og:image" content="https://abu-ray.com/brand-banner.jpg" />
+  <link rel="canonical" href="https://abu-ray.com/tawtheeq.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>التوثيقات | شباب إدارية أبوراي</title>
+  <link rel="icon" type="image/jpeg" href="brand-logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* صفحة فهرس التوثيقات — تبني على متغيرات الهوية في styles.css، وتقرأ data/tawtheeq.json */
+    .th-hero{padding:46px 0 10px}
+    .th-hero h1{font:800 clamp(38px,5vw,60px)/1.2 Cairo;color:var(--green);letter-spacing:-2px;margin:0 0 16px}
+    .th-hero h1 span{font-family:Georgia,serif;font-weight:400;color:var(--brown)}
+    .th-hero p{font-size:15px;line-height:2;color:var(--muted);max-width:640px;margin:0}
+    .th-sec{padding:40px 0 0}
+    .th-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,360px));gap:20px;justify-content:start}
+    .th-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+    .th-img{display:block;aspect-ratio:4/4.6;background:var(--surface);border-bottom:4px solid var(--gold)}
+    .th-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+    .th-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .th-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .th-card h2{font:700 21px/1.5 Cairo;color:var(--green);margin:0}
+    .th-card h2 a{color:inherit}
+    .tag{font:700 11px Tajawal;padding:5px 11px;border-radius:20px;white-space:nowrap}
+    .tag.type{background:var(--surface);color:var(--brown)}
+    .th-sum{font-size:14px;line-height:1.9;color:var(--ink);margin:0}
+    .th-by{font-size:13px;color:var(--muted);margin:0}
+    .th-read{margin-top:auto;padding-top:6px;font:700 13px Tajawal;color:var(--green)}
+    .th-read span{color:var(--brown);font-size:17px;margin-inline-start:6px}
+    .th-empty{text-align:center;padding:46px 24px;background:var(--surface);border-radius:12px;color:var(--muted);line-height:2}
+    .th-cta{margin:60px 0 70px;background:var(--green);color:#faf6ee;border-radius:12px;padding:30px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .th-cta h2{margin:0 0 6px;font:700 24px Cairo}
+    .th-cta p{margin:0;font-size:14px;line-height:1.9;max-width:560px}
+    .th-cta a{min-height:46px;display:inline-flex;align-items:center;padding:0 20px;border-radius:6px;font-weight:700;font-size:14px;background:var(--gold);color:#173b2a}
+    @media(max-width:800px){
+      .th-hero{padding:34px 0 6px}
+      .th-grid{grid-template-columns:1fr}
+      .th-cta{padding:24px 20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell" id="top">
+    <header class="site-header">
+      <div class="brand-bar">
+        <a class="brand" href="index.html" aria-label="العودة إلى الموقع الرئيسي"><img src="brand-logo.jpg" alt="شعار أبوراي" /><span><strong>شباب إدارية أبوراي</strong><small>أبوراي .. تجمعنا</small></span></a>
+        <a class="header-join" href="https://wa.me/249912469556" target="_blank" rel="noopener">تواصل عبر واتساب <span>↗</span></a>
+      </div>
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <a href="index.html">الرئيسية</a><a href="index.html#villages">القرى</a><a href="dashboard.html">لوحة المؤشرات</a><a href="form.html">استمارة التوثيق</a><a href="donations.html">التبرعات والمبادرات</a><a class="active" href="tawtheeq.html">التوثيقات</a><a href="index.html#contact">تواصل</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="th-hero" aria-labelledby="th-title">
+        <p class="section-kicker">ذاكرة أبوراي</p>
+        <h1 id="th-title">التوثيقات <span>تحفظ الأثر.</span></h1>
+        <p>توثيقات لأشخاص ومآثر تحفظ ذاكرة المكان، تُنسب كل منها إلى من وثّقها.</p>
+      </section>
+
+      <section class="th-sec" aria-label="قائمة التوثيقات">
+        <div class="th-grid" id="thGrid"></div>
+        <p class="th-empty" id="thEmpty" hidden>لا توجد توثيقات معروضة الآن.</p>
+      </section>
+
+      <section class="th-cta" aria-label="أرسل توثيقاً">
+        <div><h2>عندك توثيق؟</h2><p>إن كان لديك توثيق لشخصية أو مأثرة تحفظ ذاكرة المكان، تواصل معنا عبر واتساب لنعرضه هنا بعد المراجعة.</p></div>
+        <a href="https://wa.me/249912469556" target="_blank" rel="noopener">أرسل توثيقك عبر واتساب ↗</a>
+      </section>
+    </main>
+
+    <footer><span>أبوراي .. تجمعنا</span><span>شباب إدارية أبوراي · غرب كردفان، السودان</span><span class="visitor-stat">عدد الزوار: <strong data-visitor-count aria-live="polite">…</strong></span></footer>
+  </div>
+  <div class="floating-wa"><a href="https://wa.me/249912469556" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">واتساب <span>↗</span></a></div>
+
+  <script>
+    /* فهرس التوثيقات: يقرأ data/tawtheeq.json. المصدر الوحيد للبيانات هو الملف نفسه (الأحدث أولاً).
+       تنبيه: fetch لا يعمل من file:// مباشرة؛ الاختبار على GitHub Pages أو خادم محلي. */
+    (function () {
+      "use strict";
+      const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+      const grid = document.getElementById("thGrid"), empty = document.getElementById("thEmpty");
+      fetch("data/tawtheeq.json", { cache: "no-cache" })
+        .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(db => {
+          const entries = (db.entries || []).filter(e => e && e.title && e.url && e.documenter);
+          if (!entries.length) { empty.hidden = false; return; }
+          entries.forEach(e => {
+            const card = mk("article", "th-card");
+            if (e.image || e.imageFallback) {
+              const link = mk("a", "th-img"); link.href = e.url; link.tabIndex = -1; link.setAttribute("aria-hidden", "true");
+              const pic = document.createElement("picture");
+              if (e.image && e.imageFallback) { const s = document.createElement("source"); s.srcset = e.image; s.type = "image/webp"; pic.append(s); }
+              const img = document.createElement("img"); img.src = e.imageFallback || e.image; img.alt = e.imageAlt || ""; img.loading = "lazy";
+              pic.append(img); link.append(pic); card.append(link);
+            }
+            const body = mk("div", "th-body");
+            const top = mk("div", "th-top");
+            const h = mk("h2"); const a = mk("a", null, e.title); a.href = e.url; h.append(a); top.append(h);
+            if (e.tag) top.append(mk("span", "tag type", e.tag));
+            body.append(top);
+            if (e.summary) body.append(mk("p", "th-sum", e.summary));
+            body.append(mk("p", "th-by", "توثيق: " + e.documenter));
+            const read = mk("a", "th-read", "اقرأ التوثيق "); read.href = e.url; read.append(mk("span", null, "←"));
+            body.append(read); card.append(body); grid.append(card);
+          });
+        })
+        .catch(error => { console.error("تعذّر تحميل التوثيقات", error); empty.textContent = "تعذّر تحميل التوثيقات. أعد المحاولة لاحقاً."; empty.hidden = false; });
+    })();
+  </script>
+  <script src="visitor-counter.js" defer></script>
+</body>
+</html>
