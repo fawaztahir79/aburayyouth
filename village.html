@@ -196,8 +196,10 @@
         main.append(head);
 
         /* شريط الحقائق */
+        /* إن غاب عدد السكان من الدليل (مثلاً استُبعد رقمه) وبقي عدد الأسر، نعرض السكان من السجل أو «غير مذكور» حتى لا يُقرأ رقم الأسر على أنه سكان */
+        const popOf = guide?.population || (record?.population && !/^غير/.test(record.population) ? record.population : "غير مذكور");
         const pop = (guide && (guide.population || guide.families))
-          ? [guide.population, guide.families].filter(Boolean).join(" — ")
+          ? [popOf, guide.families].filter(Boolean).join(" — ")
           : (record?.population || "غير مذكور");
         const numType = record?.numbersType ? ` (${record.numbersType})` : "";
         const facts = el("div", "vp-facts");
