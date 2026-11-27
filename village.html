@@ -272,6 +272,29 @@
         svcSec.append(grid);
         main.append(svcSec);
 
+        /* احتياجات القرية كما ذكرها من عبّأوا الاستمارات: للقرى المسجلة فقط (لها دليل أو سجل) */
+        if (guide || record) {
+          const needs = AbuRay.needsOf(entry);
+          const needSec = el("section", "vp-sec");
+          needSec.append(el("h2", null, "احتياجات القرية"));
+          if (needs) {
+            const needGrid = el("div", "svc-grid");
+            AbuRay.NEED_DOMAINS.forEach(d => {
+              if (!needs[d.id]) return;
+              const card = el("div", "svc");
+              const top = el("div", "svc-top"); top.append(el("h3", null, d.name));
+              card.append(top, el("p", null, needs[d.id].text));
+              needGrid.append(card);
+            });
+            needSec.append(needGrid);
+            if (needs.other) needSec.append(el("p", "gal-note", needs.other));
+            needSec.append(el("p", "gal-note", "كما ذكرها من عبّأوا الاستمارات، وهي غير معتمدة رسمياً."));
+          } else {
+            needSec.append(el("p", "gal-note", "لم تذكر الاستمارات احتياجات محددة لهذه القرية بعد."));
+          }
+          main.append(needSec);
+        }
+
         /* كيف نقرأ البيانات + دعوة المساهمة */
         const two = el("div", "vp-two");
         const noteBox = el("div", "vp-note");

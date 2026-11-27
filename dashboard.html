@@ -79,6 +79,12 @@
     .pop-val small{display:block;color:var(--muted);font-size:11px}
     .pop-unknown{font-size:13px;color:var(--muted);margin:16px 0 0;line-height:1.9}
 
+    .need-row{display:grid;grid-template-columns:minmax(200px,300px) 1fr 84px;align-items:center;gap:14px}
+    .need-name{font-size:14px;line-height:1.6;color:var(--ink)}
+    .need-name small{display:block;font:700 11px Tajawal;color:var(--muted)}
+    .need-val{font-size:13px;color:var(--ink)}
+    .tbl-cap{font:700 17px Cairo;color:var(--green);margin:28px 0 10px}
+    #needTable{min-width:720px}
     .week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:18px}
     .day{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:12px 12px 14px;min-height:92px}
     .day h4{margin:0 0 8px;font:700 14px Cairo;color:var(--green)}
@@ -123,7 +129,7 @@
       .viz-sec .section-heading{flex-direction:column}
       .viz{padding:20px 16px}
       .svc-row{grid-template-columns:1fr;gap:6px}
-      .pop-row{grid-template-columns:1fr auto;gap:6px 12px}
+      .pop-row,.need-row{grid-template-columns:1fr auto;gap:6px 12px}
       .pop-track{grid-column:1/-1;grid-row:2}
       .week{grid-template-columns:1fr}
       .day{min-height:0;display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:start}
@@ -154,7 +160,7 @@
         <div>
           <p class="section-kicker">لوحة المؤشرات · بيانات أولية</p>
           <h1 id="dash-title">القرى <span>في أرقام.</span></h1>
-          <p class="lead">ملخص بصري لما وُثّق حتى الآن في استمارات أبناء الإدارية: المياه والصحة والتعليم والأسواق وعدد السكان. تتحدّث اللوحة تلقائياً كلما أُضيفت بيانات جديدة.</p>
+          <p class="lead">ملخص بصري لما وُثّق حتى الآن في استمارات أبناء الإدارية: المياه والصحة والتعليم والأسواق وعدد السكان والاحتياجات. تتحدّث اللوحة تلقائياً كلما أُضيفت بيانات جديدة.</p>
           <p class="meta" id="latest"></p>
         </div>
         <div class="cover">
@@ -185,6 +191,18 @@
           <p class="pop-unknown" id="popUnknown"></p>
           <details class="twin"><summary>عرض البيانات كجدول</summary><div class="tbl-wrap"><table class="dt" id="popTwin"></table></div></details>
         </figure>
+      </section>
+
+      <section class="viz-sec" id="needs" aria-labelledby="nd-title" hidden>
+        <div class="section-heading"><div><p class="section-kicker">الاحتياجات</p><h2 id="nd-title">ماذا تحتاج <span>القرى؟</span></h2></div><p class="section-description">كما ذكرها من عبّأوا الاستمارات، وهي غير معتمدة رسمياً.</p></div>
+        <figure class="viz">
+          <figcaption><div class="t">أكثر الاحتياجات تكراراً</div><div class="s" id="needSub"></div></figcaption>
+          <div class="pop-rows" id="needRows"></div>
+          <details class="twin"><summary>عرض البيانات كجدول</summary><div class="tbl-wrap"><table class="dt" id="needTwin"></table></div></details>
+        </figure>
+        <div class="tbl-cap">احتياجات كل قرية كما وردت</div>
+        <div class="tbl-wrap"><table class="dt" id="needTable"></table></div>
+        <p class="tbl-note" id="needNote"></p>
       </section>
 
       <section class="viz-sec" aria-labelledby="mk-title">
@@ -378,6 +396,58 @@
         t.append(tb);
       }
 
+      function renderNeeds(rows, centers) {
+        const all = [...rows, ...centers];
+        if (!all.some(r => r.needs)) return;
+        $("needs").hidden = false;
+        const withNeeds = rows.filter(r => r.needs);
+
+        /* الاحتياجات الأكثر تكراراً: تُعدّ القرى فقط، ومركز الإدارية يظهر في الجدول ولا يدخل في العدّ */
+        const items = [];
+        A.NEED_DOMAINS.forEach(dom => Object.entries(A.NEED_THEMES[dom.id]).forEach(([id, label]) => {
+          const names = withNeeds.filter(r => r.needs[dom.id] && r.needs[dom.id].themes.includes(id)).map(r => r.name);
+          if (names.length) items.push({ domain: dom.name, label, names });
+        }));
+        items.sort((a, b) => b.names.length - a.names.length);
+        const host = $("needRows"); host.textContent = "";
+        const max = Math.max(1, ...items.map(i => i.names.length));
+        items.forEach(it => {
+          const n = it.names.length;
+          const row = el("div", "need-row");
+          const nm = el("div", "need-name"); nm.append(el("small", null, it.domain), document.createTextNode(it.label));
+          const track = el("div", "pop-track"); track.tabIndex = 0; track.setAttribute("role", "img");
+          track.setAttribute("aria-label", `${it.domain} · ${it.label}: ${vWord(n)}`);
+          track.style.setProperty("--min", (n / max * 100) + "%");
+          track.append(el("div", "pop-bar"));
+          bindTip(track, { value: vWord(n), label: `${it.domain} · ${it.label}`, color: "var(--green)", items: it.names });
+          row.append(nm, track, el("div", "need-val", vWord(n)));
+          host.append(row);
+        });
+        $("needSub").textContent = `عدد القرى التي ذكرت كل احتياج، من ${withNeeds.length} قرية ذكرت احتياجات في الاستمارات (من ${rows.length} قرية مسجلة). ليس ترتيباً للأولوية.`;
+
+        const tw = $("needTwin"); tw.textContent = "";
+        const th = el("thead"), thr = el("tr");
+        ["المجال", "الاحتياج", "عدد القرى", "القرى"].forEach(h => thr.append(el("th", null, h))); th.append(thr); tw.append(th);
+        const tbd = el("tbody");
+        items.forEach(it => { const tr = el("tr"); tr.append(el("td", "name", it.domain), el("td", null, it.label), el("td", null, String(it.names.length)), el("td", null, it.names.join("، "))); tbd.append(tr); });
+        tw.append(tbd);
+
+        const t = $("needTable"); t.textContent = "";
+        const thead = el("thead"), hr = el("tr");
+        ["القرية", "المياه", "التعليم", "الصحة"].forEach(h => hr.append(el("th", null, h))); thead.append(hr); t.append(thead);
+        const tb = el("tbody");
+        all.filter(r => r.needs).forEach(r => {
+          const tr = el("tr"); const cell = el("td", "name"); cell.append(vlink(r.name));
+          if (r.isCenter) cell.append(el("small", null, "مركز الإدارية"));
+          tr.append(cell);
+          ["water", "education", "health"].forEach(k => tr.append(el("td", null, r.needs[k] ? r.needs[k].text : "—")));
+          tb.append(tr);
+        });
+        t.append(tb);
+        const none = rows.filter(r => !r.needs).map(r => r.name);
+        $("needNote").textContent = none.length ? `قرى مسجلة لم تذكر استماراتها احتياجات: ${none.join("، ")}.` : "";
+      }
+
       function renderWeek(rows, centers) {
         const host = $("week"); host.textContent = "";
         const byDay = A.DAYS.map(() => []);
@@ -437,7 +507,7 @@
           name: entry.name, isCenter, rec: r,
           water: A.classify.water(r.water), education: A.classify.education(r.education),
           health: A.classify.health(r.health), market: A.classify.market(r.market),
-          pop: A.parsePopulation(r.population), days: A.marketDays(r.market)
+          pop: A.parsePopulation(r.population), days: A.marketDays(r.market), needs: A.needsOf(entry)
         };
       };
 
@@ -452,7 +522,7 @@
           const latest = latestTs ? new Date(latestTs).toLocaleDateString("en-GB") : "";
           renderCoverage(villages.length, rows.length, latest);
           if (!rows.length) { $("kpis").append(el("p", "dash-error", "لا توجد سجلات لعرضها بعد.")); return; }
-          renderKpis(rows); renderServices(rows); renderPopulation(rows); renderWeek(rows, centerRows); renderTable(rows, centerRows);
+          renderKpis(rows); renderServices(rows); renderPopulation(rows); renderNeeds(rows, centerRows); renderWeek(rows, centerRows); renderTable(rows, centerRows);
           fitLabels();
           if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabels);
           if (window.ResizeObserver) new ResizeObserver(fitLabels).observe($("svcRows")); else addEventListener("resize", fitLabels);

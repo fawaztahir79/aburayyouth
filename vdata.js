@@ -81,6 +81,37 @@
     return r && Object.values(r).some(v => v !== null && v !== undefined && String(v).trim() !== "") ? r : null;
   }
 
-  root.AbuRay = { DAYS, STATUS, classify, marketDays, parsePopulation, recordOf };
+  /* الاحتياجات: needs.{water|education|health} = { text, themes[] }؛ النص كما ورد في الاستمارات (موحّد الصياغة)،
+     والوسوم (themes) صريحة في البيانات وتغذّي مخطط «أكثر الاحتياجات تكراراً» في اللوحة. needs.other نص حر اختياري. */
+  const NEED_DOMAINS = [
+    { id: "water", name: "المياه" },
+    { id: "education", name: "التعليم" },
+    { id: "health", name: "الصحة" }
+  ];
+  const NEED_THEMES = {
+    water: { sources: "نقص الدوانكي أو المحطات أو الآبار", maintenance: "أعطال وصيانة", fuel: "الوقود", power: "الكهرباء والتيار" },
+    education: { buildings: "ترميم المدارس وبناؤها وتأهيل مبانيها", teachers: "معلمون وكادر وسكن للمعلمين", supplies: "كتب وأجلاس ومستلزمات", schools: "مدارس جديدة أو ثانوية" },
+    health: { facility: "مركز صحي أو مستشفى أو عيادة", pharmacy: "صيدلية وتوفير الدواء", lab: "معمل", staff: "قابلة أو طبيب", emergency: "إسعاف وعمليات قيصرية" }
+  };
+
+  /* احتياجات القرية بصيغة موحّدة، أو null إن لم تُسجَّل احتياجات */
+  function needsOf(entry) {
+    const n = entry && entry.needs;
+    if (!n) return null;
+    const out = {};
+    NEED_DOMAINS.forEach(d => {
+      const val = n[d.id];
+      if (!val) return;
+      const text = typeof val === "string" ? val : val.text;
+      if (!text || !String(text).trim()) return;
+      const themes = (typeof val === "object" && Array.isArray(val.themes)) ? val.themes.filter(t => NEED_THEMES[d.id][t]) : [];
+      out[d.id] = { text: String(text).trim(), themes };
+    });
+    const other = n.other && String(n.other).trim();
+    if (other) out.other = other;
+    return Object.keys(out).length ? out : null;
+  }
+
+  root.AbuRay = { DAYS, STATUS, classify, marketDays, parsePopulation, recordOf, NEED_DOMAINS, NEED_THEMES, needsOf };
   if (typeof module !== "undefined" && module.exports) module.exports = root.AbuRay;
 })(typeof window !== "undefined" ? window : globalThis);
