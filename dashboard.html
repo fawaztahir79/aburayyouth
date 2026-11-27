@@ -409,6 +409,7 @@
           tr.append(nm);
           const pop = el("td", "pop"); pop.append(document.createTextNode(r.rec.population || "—"));
           if (r.rec.numbersType) pop.append(el("span", "cell-orig", r.rec.numbersType));
+          if (r.rec.families && !/^غير/.test(r.rec.families)) pop.append(el("span", "cell-orig", "الأسر: " + r.rec.families));
           tr.append(pop);
           tr.append(chipCell(r.water.k, r.water.label, r.rec.water), chipCell(r.education.k, r.education.label, r.rec.education),
                     chipCell(r.health.k, r.health.label, r.rec.health), chipCell(r.market.k, r.market.label, r.rec.market));

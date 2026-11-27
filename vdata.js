@@ -25,7 +25,7 @@
       t = String(t || "");
       if (UNKNOWN_RE.test(t)) return UNK;
       if ((START_NONE.test(t) || /غير\s*متوفر/.test(t)) && !/شحيح/.test(t)) return mk("bad", "غير متوفرة");
-      if (/شحيح|أمطار|تُنقل|تنقل|متقطع/.test(t)) return mk("warn", "شحيحة أو غير مستقرة");
+      if (/شحيح|أمطار|تُنقل|تنقل|متقطع|موسمي/.test(t)) return mk("warn", "شحيحة أو غير مستقرة");
       if (/متوفر/.test(t)) return mk("good", "متوفرة");
       return UNK;
     },

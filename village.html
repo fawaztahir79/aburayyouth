@@ -244,13 +244,14 @@
         const grid = el("div", "svc-grid");
         const popNarrative = (guide && (guide.population || guide.families))
           ? [guide.population, guide.families].filter(Boolean).join(" — ") : "";
+        const famLine = (record?.families && !/^غير/.test(record.families) && !(guide && guide.families)) ? "عدد الأسر: " + record.families : "";
         [
           { title: "المياه والطرق", rec: record?.water, gd: guide?.water, kind: "water" },
           { title: "التعليم", rec: record?.education, gd: guide?.education, kind: "education" },
           { title: "الصحة", rec: record?.health, gd: guide?.health, kind: "health" },
           { title: "الشرطة والأمن", rec: record?.police, gd: "", kind: "" },
           { title: "السوق", rec: record?.market, gd: guide?.market, kind: "market" },
-          { title: "السكان", rec: record?.population, gd: popNarrative, kind: "population" }
+          { title: "السكان", rec: record?.population, gd: [popNarrative, famLine].filter(Boolean).join(" — "), kind: "population" }
         ].forEach(({ title, rec, gd, kind }) => {
           let st;
           if (kind === "population") st = { k: reliabilityClass(record?.reliability), l: record?.numbersType || "تقديري" };
